@@ -2,3 +2,8 @@ name: Cerkour
 version: '1.0-SNAPSHOT'
 main: me.cerdax.cerkour.Cerkour
 api-version: '1.8.8'
+commands:
+  gg:
+    description: A simple GG command
+    usage: /<command>
+
