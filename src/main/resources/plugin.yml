@@ -6,4 +6,10 @@ commands:
   gg:
     description: A simple GG command
     usage: /<command>
+  map:
+    description: Map handling
+  join:
+    description: Join a map
+  leave:
+    description: Leave a map
 

@@ -1,4 +1,13 @@
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\Cerkour.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\GGCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\JoinCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaveCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\MapCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerJoinListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerMoveListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerQuitListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerSprintListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\Map.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\MapManager.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\Profile.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\ProfileManager.java

@@ -1,18 +1,20 @@
 package me.cerdax.cerkour.commands;
 
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.profile.Profile;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GGCommand implements CommandExecutor {
+public class LeaveCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Bukkit.broadcastMessage("<" + player.getDisplayName() + String.format("> %s%sG%s%sG", ChatColor.GOLD, ChatColor.BOLD, ChatColor.YELLOW, ChatColor.BOLD));
+            Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
+            player.sendMessage("§6§lCerkour§e> You left the map: §6" + profile.getMap().getName());
+            profile.leaveMap();
         }
         return true;
     }
