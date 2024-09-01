@@ -22,13 +22,19 @@ public class MapCommand implements CommandExecutor {
                 else if (args[0].equalsIgnoreCase("rankup")) {
                     Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                     if (map != null) {
-                        if (map.getIsRankUp()) {
-                            map.setRankUp(0);
-                            player.sendMessage("§6§lCerkour§e> The map §6" + map.getName() + " §eis no longer rankup!");
+                        if (args.length < 3) {
+                            if (map.getIsRankUp()) {
+                                map.setRankUp(0);
+                                player.sendMessage("§6§lCerkour§e> The map §6" + map.getName() + " §eis no longer rankup!");
+                            }
+                            else {
+                                player.sendMessage("§6§lCerkour§e> Invalid usage!");
+                            }
                         }
                         else {
                             map.setRankUp(Integer.parseInt(args[2]));
                             player.sendMessage("§6§lCerkour§e> The map §6" + map.getName() + " §eis now the rankup: §6" + map.getRankUp());
+
                         }
                     }
                     else {

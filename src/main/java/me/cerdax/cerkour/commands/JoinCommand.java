@@ -13,11 +13,16 @@ public class JoinCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
+            Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
             if (args.length > 0) {
                 Map map = Cerkour.getInstance().getMapManager().getMapByName(args[0]);
                 if (map != null) {
-                    Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-                    profile.joinMap(map, player);
+                    if ((map.getIsRankUp() && map.getRankUp() <= profile.getRankUp()) || !map.getIsRankUp()) {
+                        profile.joinMap(map, player);
+                    }
+                    else {
+                        player.sendMessage("§6§lCerkour§e> You may not join this map");
+                    }
                 }
                 else {
                     player.sendMessage("§6§lCerkour§e> Map not found!");

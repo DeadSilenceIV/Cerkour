@@ -3,6 +3,7 @@ package me.cerdax.cerkour.listeners;
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -22,8 +23,8 @@ public class PlayerMoveListener implements Listener {
             if (map.getEndLocation().getBlockZ() == to.getBlockZ() && map.getEndLocation().getBlockX() == to.getBlockX() && map.getEndLocation().getBlockY() == to.getBlockY()) {
                 if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
                     profile.setRankUp(profile.getRankUp() + 1);
-                    player.sendMessage("§6§lCerkour§e> You have ranked up to rank: §6" + profile.getRankUp());
-                    Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to rank: §6" + profile.getRankUp() + "§e!");
+                    player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()));
+                    Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
                 }
                 else {
                     player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName());

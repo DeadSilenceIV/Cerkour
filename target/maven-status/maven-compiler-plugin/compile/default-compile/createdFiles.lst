@@ -9,5 +9,6 @@ me\cerdax\cerkour\Cerkour.class
 me\cerdax\cerkour\commands\LeaveCommand.class
 me\cerdax\cerkour\listeners\PlayerSprintListener.class
 me\cerdax\cerkour\profile\Profile.class
+me\cerdax\cerkour\utils\RankUtils.class
 me\cerdax\cerkour\map\Map.class
 me\cerdax\cerkour\listeners\PlayerMoveListener.class
