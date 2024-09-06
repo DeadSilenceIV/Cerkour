@@ -1,5 +1,6 @@
 package me.cerdax.cerkour.profile;
 
+import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
 import org.bukkit.entity.Player;
 
@@ -17,6 +18,15 @@ public class Profile {
         this.map = null;
         this.coins = 0;
         this.rankUp = 1;
+        serialize();
+    }
+
+    public Profile(UUID uuid, int coins, int rankUp) {
+        this.uuid = uuid;
+        this.map = null;
+        this.coins = coins;
+        this.rankUp = rankUp;
+        serialize();
     }
 
     public UUID getUuid() {
@@ -33,6 +43,7 @@ public class Profile {
 
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
+        serialize();
     }
 
     public void joinMap(Map map, Player player) {
@@ -46,5 +57,15 @@ public class Profile {
         if (this.map != null) {
             this.map = null;
         }
+    }
+
+    public int getCoins() {
+        return this.coins;
+    }
+
+    public void serialize() {
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
+        CustomFiles.saveCustomFile("profiles");
     }
 }

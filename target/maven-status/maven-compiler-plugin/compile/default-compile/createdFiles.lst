@@ -1,8 +1,9 @@
 me\cerdax\cerkour\commands\GGCommand.class
 me\cerdax\cerkour\utils\LocationUtils.class
+me\cerdax\cerkour\utils\SoundUtils.class
 me\cerdax\cerkour\commands\JoinCommand.class
 me\cerdax\cerkour\commands\MapCommand.class
-me\cerdax\cerkour\files\CustomConfig.class
+me\cerdax\cerkour\files\CustomFiles.class
 me\cerdax\cerkour\listeners\PlayerQuitListener.class
 me\cerdax\cerkour\map\MapManager.class
 me\cerdax\cerkour\profile\ProfileManager.class

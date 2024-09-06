@@ -26,6 +26,9 @@ public final class Cerkour extends JavaPlugin {
         CustomFiles.setup("maps");
         CustomFiles.getCustomFile("maps").options().copyDefaults(true);
 
+        CustomFiles.setup("profiles");
+        CustomFiles.getCustomFile("profiles").options().copyDefaults(true);
+
         CustomFiles.saveAllCustomFiles();
     }
 
