@@ -3,6 +3,8 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\GGComma
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\JoinCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaveCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\MapCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\files\CustomConfig.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\AsyncPlayerChatListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerJoinListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerMoveListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerQuitListener.java
@@ -11,4 +13,5 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\Map.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\MapManager.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\Profile.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\ProfileManager.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\LocationUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\RankUtils.java

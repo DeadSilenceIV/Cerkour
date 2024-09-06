@@ -1,6 +1,10 @@
 package me.cerdax.cerkour.map;
-;
+
+import java.util.Objects;
 import java.util.UUID;
+
+import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
 
 public class Map {
@@ -20,6 +24,15 @@ public class Map {
         this.rankUp = 0;
     }
 
+    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp) {
+        this.uuid = uuid;
+        this.name = name;
+        this.startLocation = spawnLocation;
+        this.endLocation = endLocation;
+        this.rankUp = rankUp;
+        serialize();
+    }
+
     public String getName() {
         return this.name;
     }
@@ -30,6 +43,7 @@ public class Map {
 
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
+        serialize();
     }
 
     public boolean getIsRankUp() {
@@ -45,6 +59,7 @@ public class Map {
 
     public void setStartLocation(Location startLocation) {
         this.startLocation = startLocation;
+        serialize();
     }
 
     public Location getStartLocation() {
@@ -53,9 +68,18 @@ public class Map {
 
     public void setEndLocation(Location endLocation) {
         this.endLocation = endLocation;
+        serialize();
     }
 
     public Location getEndLocation() {
         return this.endLocation;
+    }
+
+    public void serialize() {
+        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".name", getName());
+        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
+        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
+        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
+        CustomFiles.saveCustomFile("maps");
     }
 }

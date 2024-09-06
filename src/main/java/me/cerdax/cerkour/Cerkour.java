@@ -1,14 +1,8 @@
 package me.cerdax.cerkour;
 
-import me.cerdax.cerkour.commands.GGCommand;
-import me.cerdax.cerkour.commands.JoinCommand;
-import me.cerdax.cerkour.commands.LeaveCommand;
-import me.cerdax.cerkour.commands.MapCommand;
-import me.cerdax.cerkour.listeners.PlayerJoinListener;
-import me.cerdax.cerkour.listeners.PlayerMoveListener;
-import me.cerdax.cerkour.listeners.PlayerQuitListener;
-import me.cerdax.cerkour.listeners.PlayerSprintListener;
-import me.cerdax.cerkour.map.Map;
+import me.cerdax.cerkour.commands.*;
+import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.listeners.*;
 import me.cerdax.cerkour.map.MapManager;
 import me.cerdax.cerkour.profile.ProfileManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +19,14 @@ public final class Cerkour extends JavaPlugin {
         registerManagers();
         registerCommands();
         registerListeners();
+
+        getConfig().options().copyDefaults(true);
+        saveDefaultConfig();
+
+        CustomFiles.setup("maps");
+        CustomFiles.getCustomFile("maps").options().copyDefaults(true);
+
+        CustomFiles.saveAllCustomFiles();
     }
 
     @Override
@@ -37,6 +39,7 @@ public final class Cerkour extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerSprintListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
+        getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
     }
 
     public void registerCommands() {

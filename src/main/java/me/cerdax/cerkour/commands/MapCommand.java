@@ -1,6 +1,7 @@
 package me.cerdax.cerkour.commands;
 
 import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -8,6 +9,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapCommand implements CommandExecutor {
     @Override
@@ -74,6 +78,15 @@ public class MapCommand implements CommandExecutor {
                     else {
                         player.sendMessage("§6§lCerkour§e> Map not found!");
                     }
+                }
+                else if (args[0].equalsIgnoreCase("list")) {
+                    CustomFiles.reloadAllCustomFiles();
+                    List<String> mapNames = new ArrayList<>();
+                    for (Map m : Cerkour.getInstance().getMapManager().getAllMaps()) {
+                        mapNames.add(m.getName());
+                    }
+                    player.sendMessage("§6§lCerkour§e> Maps: §6" + String.join("§e, §6", mapNames) + " ");
+
                 }
             }
             else {
