@@ -12,4 +12,8 @@ commands:
     description: Join a map
   leave:
     description: Leave a map
+  profile:
+    description: Edit profile stats
+  spawn:
+    description: Teleports you to spawn
 

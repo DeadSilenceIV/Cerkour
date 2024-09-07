@@ -1,7 +1,11 @@
 package me.cerdax.cerkour.profile;
 
+import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
+import me.cerdax.cerkour.utils.LocationUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -53,9 +57,10 @@ public class Profile {
         }
     }
 
-    public void leaveMap() {
+    public void leaveMap(Player player) {
         if (this.map != null) {
             this.map = null;
+            player.teleport(LocationUtils.getSpawn());
         }
     }
 

@@ -31,7 +31,7 @@ public class CustomFiles {
     public static FileConfiguration getCustomFile(String fileName) {
         FileConfiguration custom = customFiles.get(fileName.toLowerCase());
         if (custom == null) {
-            setup("maps");
+            setup(fileName);
         }
         return customFiles.get(fileName.toLowerCase());
     }

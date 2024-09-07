@@ -5,13 +5,19 @@ import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.listeners.*;
 import me.cerdax.cerkour.map.MapManager;
 import me.cerdax.cerkour.profile.ProfileManager;
+import me.cerdax.cerkour.scoreboard.Board;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitTask;
 
 public final class Cerkour extends JavaPlugin {
 
     private static Cerkour instance;
     private MapManager mapManager;
     private ProfileManager profileManager;
+    private BukkitTask task;
 
     @Override
     public void onEnable() {
@@ -29,12 +35,18 @@ public final class Cerkour extends JavaPlugin {
         CustomFiles.setup("profiles");
         CustomFiles.getCustomFile("profiles").options().copyDefaults(true);
 
-        CustomFiles.saveAllCustomFiles();
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.setGameMode(GameMode.ADVENTURE);
+        }
+        task = getServer().getScheduler().runTaskTimer(this, Board.getInstance(), 0, 20);
     }
 
     @Override
     public void onDisable() {
-
+        super.onDisable();
+        if (task != null) {
+            task.cancel();
+        }
     }
 
     public void registerListeners() {
@@ -43,6 +55,7 @@ public final class Cerkour extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerSprintListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
         getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
     }
 
     public void registerCommands() {
@@ -50,6 +63,8 @@ public final class Cerkour extends JavaPlugin {
         getCommand("gg").setExecutor(new GGCommand());
         getCommand("join").setExecutor(new JoinCommand());
         getCommand("leave").setExecutor(new LeaveCommand());
+        getCommand("profile").setExecutor(new ProfileCommand());
+        getCommand("spawn").setExecutor(new SpawnCommand());
     }
 
     public void registerManagers() {

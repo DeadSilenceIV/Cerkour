@@ -31,7 +31,7 @@ public class PlayerMoveListener implements Listener {
                 else {
                     player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName());
                 }
-                profile.leaveMap();
+                profile.leaveMap(player);
             }
             if (e.getFrom().distance(e.getTo()) > 0.1D) {
                 if (!player.isSprinting()) {

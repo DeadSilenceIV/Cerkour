@@ -3,6 +3,7 @@ package me.cerdax.cerkour.commands;
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
+import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -21,7 +22,7 @@ public class MapCommand implements CommandExecutor {
             if (args.length > 0) {
                 if (args[0].equalsIgnoreCase("create")) {
                     Map map = Cerkour.getInstance().getMapManager().createMap(args[1]);
-                    player.sendMessage("§6§lCerkour§e> You created the map: §6" + map.getName());
+                    player.sendMessage("§6§lCerkour§e> You created the map: §6" + args[1]);
                 }
                 else if (args[0].equalsIgnoreCase("rankup")) {
                     Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
@@ -38,7 +39,6 @@ public class MapCommand implements CommandExecutor {
                         else {
                             map.setRankUp(Integer.parseInt(args[2]));
                             player.sendMessage("§6§lCerkour§e> The map §6" + map.getName() + " §eis now the rankup: §6" + map.getRankUp());
-
                         }
                     }
                     else {
@@ -86,7 +86,11 @@ public class MapCommand implements CommandExecutor {
                         mapNames.add(m.getName());
                     }
                     player.sendMessage("§6§lCerkour§e> Maps: §6" + String.join("§e, §6", mapNames) + " ");
-
+                }
+                else if (args[0].equalsIgnoreCase("setspawn")) {
+                    Cerkour.getInstance().getConfig().set("spawn", LocationUtils.locationToString(player.getLocation()));
+                    Cerkour.getInstance().saveDefaultConfig();
+                    player.sendMessage("§6§lCerkour§e> You set the server spawn!");
                 }
             }
             else {

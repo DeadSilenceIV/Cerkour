@@ -5,43 +5,43 @@ import org.bukkit.ChatColor;
 public class RankUtils {
     public static String getColoredRank(int i) {
         if (i == 1) {
-            return ChatColor.GRAY + "[" + ChatColor.YELLOW + "I" + ChatColor.GRAY + "]";
+            return "§eI";
         }
         if (i == 2) {
-            return ChatColor.GRAY + "[" + ChatColor.YELLOW + "II" + ChatColor.GRAY + "]";
+            return "§eII";
         }
         if (i == 3) {
-            return ChatColor.GRAY + "[" + ChatColor.YELLOW + "III" + ChatColor.GRAY + "]";
+            return "§eIII";
         }
         if (i == 4) {
-            return ChatColor.GRAY + "[" + ChatColor.GREEN + "IV" + ChatColor.GRAY + "]";
+            return "§aIV";
         }
         if (i == 5) {
-            return ChatColor.GRAY + "[" + ChatColor.GREEN + "V" + ChatColor.GRAY + "]";
+            return "§aV";
         }
         if (i == 6) {
-            return ChatColor.GRAY + "[" + ChatColor.GREEN + "VI" + ChatColor.GRAY + "]";
+            return "§aVI";
         }
         if (i == 7) {
-            return "§d[" + ChatColor.DARK_PURPLE + "<" + ChatColor.LIGHT_PURPLE + "VII" + ChatColor.DARK_PURPLE + ">" + "§d]";
+            return "§d§lVII";
         }
         if (i == 8) {
-            return "§d[" + ChatColor.DARK_PURPLE + "<" + ChatColor.LIGHT_PURPLE + "VIII" + ChatColor.DARK_PURPLE + ">" + "§d]";
+            return "§d§lVIII";
         }
         if (i == 9) {
-            return "§d[" + ChatColor.DARK_PURPLE + "<" + ChatColor.LIGHT_PURPLE + "IX" + ChatColor.DARK_PURPLE + ">" + "§d]";
+            return "§d§lIX";
         }
         if (i == 10) {
-            return "§c[" + ChatColor.DARK_RED + "<" + ChatColor.RED + "X" + ChatColor.DARK_RED + ">" + "§c]";
+            return "§c§lX";
         }
         if (i == 11) {
-            return "§c[" + ChatColor.DARK_RED + "<" + ChatColor.RED + "XI" + ChatColor.DARK_RED + ">" + "§c]";
+            return "§c§lXI";
         }
         if (i == 12) {
-            return "§c[" + ChatColor.DARK_RED + "<" + ChatColor.RED + "XII" + ChatColor.DARK_RED + ">" + "§c]";
+            return "§c§lXII";
         }
         if (i == 13) {
-            return "§9[" + "§1<<" + "§9§n§lXIII" + "§1>>" + "§9]";
+            return "§9§lXIII";
         }
         return null;
     }

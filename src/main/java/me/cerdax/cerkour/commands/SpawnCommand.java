@@ -1,20 +1,17 @@
 package me.cerdax.cerkour.commands;
 
-import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class LeaveCommand implements CommandExecutor {
+public class SpawnCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-            player.sendMessage("§6§lCerkour§e> You left the map: §6" + profile.getMap().getName());
-            profile.leaveMap(player);
+            player.teleport(LocationUtils.getSpawn());
         }
         return true;
     }

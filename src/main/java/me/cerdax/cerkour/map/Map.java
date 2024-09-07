@@ -6,6 +6,7 @@ import java.util.UUID;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
+import org.bukkit.configuration.file.FileConfiguration;
 
 public class Map {
 
@@ -22,6 +23,7 @@ public class Map {
         this.startLocation = null;
         this.endLocation = null;
         this.rankUp = 0;
+        serialize();
     }
 
     public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp) {
@@ -30,7 +32,6 @@ public class Map {
         this.startLocation = spawnLocation;
         this.endLocation = endLocation;
         this.rankUp = rankUp;
-        serialize();
     }
 
     public String getName() {
@@ -76,10 +77,18 @@ public class Map {
     }
 
     public void serialize() {
-        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".name", getName());
-        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
-        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
-        Objects.requireNonNull(CustomFiles.getCustomFile("maps")).set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
-        CustomFiles.saveCustomFile("maps");
+        FileConfiguration config = CustomFiles.getCustomFile("maps");
+        if (config != null) {
+            config.set("maps." + getMapUUID().toString(), null); // Clear existing data
+            config.set("maps." + getMapUUID().toString() + ".name", getName());
+            if (getStartLocation() != null) {
+                config.set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
+            }
+            if (getEndLocation() != null) {
+                config.set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
+            }
+            config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
+            CustomFiles.saveCustomFile("maps");
+        }
     }
 }

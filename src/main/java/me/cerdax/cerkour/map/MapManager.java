@@ -49,34 +49,35 @@ public class MapManager {
 
         if (!config.contains("maps")) {
             config.createSection("maps");
+            CustomFiles.saveCustomFile("maps");
         }
 
         ConfigurationSection section = config.getConfigurationSection("maps");
 
         if (section == null) {
+            Bukkit.getLogger().warning("No 'maps' section found in the configuration file.");
             return;
         }
 
-        for (String uuid : section.getKeys(false)) {
-            ConfigurationSection mapSection = config.getConfigurationSection("maps." + uuid);
+
+        for (String uuidStr : section.getKeys(false)) {
+            ConfigurationSection mapSection = config.getConfigurationSection("maps." + uuidStr);
 
             if (mapSection != null) {
-                UUID mapUUID = UUID.fromString(uuid);
+                UUID mapUUID = UUID.fromString(uuidStr);
                 String name = mapSection.getString("name");
                 String strSpawn = mapSection.getString("spawn");
                 String strEnd = mapSection.getString("end");
-                int rankUp = mapSection.getInt("rankup");
+                int rankUp = mapSection.getInt("rankup", 0);
 
-                Location spawnLoc = LocationUtils.stringToLocation(strSpawn);
-                Location endLoc = LocationUtils.stringToLocation(strEnd);
+                Location spawnLoc = strSpawn != null ? LocationUtils.stringToLocation(strSpawn) : null;
+                Location endLoc = strEnd != null ? LocationUtils.stringToLocation(strEnd) : null;
 
                 Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp);
                 maps.add(map);
             }
         }
-        CustomFiles.saveCustomFile("maps");
     }
-
 
     public List<Map> getMaps() {
         return this.maps;

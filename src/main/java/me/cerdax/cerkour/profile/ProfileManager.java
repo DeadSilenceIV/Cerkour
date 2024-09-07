@@ -64,7 +64,5 @@ public class ProfileManager {
                 profiles.add(profile);
             }
         }
-        CustomFiles.saveCustomFile("profiles");
     }
-
 }

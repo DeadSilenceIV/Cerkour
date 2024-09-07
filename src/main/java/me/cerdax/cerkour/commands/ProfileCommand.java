@@ -1,0 +1,28 @@
+package me.cerdax.cerkour.commands;
+
+import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.profile.Profile;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class ProfileCommand implements CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        Player player = (Player) sender;
+        if (args.length > 1) {
+            Player targetPlayer = Bukkit.getPlayer(args[1]);
+            Profile profile = Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId());
+            if (args[0].equalsIgnoreCase("setrankup")) {
+                profile.setRankUp(Integer.parseInt(args[2]));
+                player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §erank to: §6" + profile.getRankUp());
+            }
+        }
+        else {
+            player.sendMessage("§6§lCerkour§e> Please specify subcommand!"); //perhaps make this display all subcommands instead
+        }
+        return true;
+    }
+}
