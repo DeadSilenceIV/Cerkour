@@ -8,6 +8,9 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\SpawnCo
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\files\CustomFiles.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\AsyncPlayerChatListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\EntityDamageListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\InventoryClickListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerDropItemListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerInteractListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerJoinListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerMoveListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerQuitListener.java
@@ -17,6 +20,7 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\MapManager.j
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\Profile.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\ProfileManager.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\scoreboard\Board.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\InventoryUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\LocationUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\RankUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\SoundUtils.java

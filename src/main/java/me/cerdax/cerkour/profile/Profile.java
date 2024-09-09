@@ -3,8 +3,10 @@ package me.cerdax.cerkour.profile;
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
+import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -54,6 +56,9 @@ public class Profile {
         if (map.getStartLocation() != null) {
             this.map = map;
             player.teleport(map.getStartLocation());
+            player.setGameMode(GameMode.ADVENTURE);
+            player.getInventory().clear();
+            InventoryUtils.gameInventory(player);
         }
     }
 
@@ -61,6 +66,8 @@ public class Profile {
         if (this.map != null) {
             this.map = null;
             player.teleport(LocationUtils.getSpawn());
+            player.getInventory().clear();
+            InventoryUtils.lobbyInventory(player);
         }
     }
 

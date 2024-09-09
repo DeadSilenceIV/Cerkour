@@ -2,6 +2,7 @@ package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -18,5 +19,7 @@ public class PlayerJoinListener implements Listener {
         player.teleport(LocationUtils.getSpawn());
         player.setGameMode(GameMode.ADVENTURE);
         e.setJoinMessage("§e[§a§l+§e] §6" + player.getName());
+        player.getInventory().clear();
+        InventoryUtils.lobbyInventory(player);
     }
 }

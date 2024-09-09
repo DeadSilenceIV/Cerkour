@@ -1,5 +1,6 @@
 package me.cerdax.cerkour.map;
 
+import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
@@ -7,6 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -27,15 +29,39 @@ public class MapManager {
     }
 
     public void removeMap(String name) {
-        maps.removeIf(map -> map.getName().equalsIgnoreCase(name));
+        Map removeMap = this.maps.stream().filter(map -> map.getName().equalsIgnoreCase(name)).findAny().orElse(null);
+        this.maps.removeIf(map -> map.getName().equalsIgnoreCase(name));
+        if (removeMap != null) {
+            CustomFiles.getCustomFile("maps").set("maps." + removeMap.getMapUUID().toString(), null);
+            CustomFiles.saveCustomFile("maps");
+        }
     }
 
     public Map getMapByName(String name) {
         return this.maps.stream().filter(map -> map.getName().equalsIgnoreCase(name)).findAny().orElse(null);
     }
 
+    public Map getMapByRankUp(int rankUp) {
+        for (Map map : this.maps) {
+            if (map.getRankUp() == rankUp) {
+                return map;
+            }
+        }
+        return null;
+    }
+
     public List<Map> getAllMaps() {
         return this.maps;
+    }
+
+    public List<Map> getAllRankUpMaps() {
+        List<Map> rankUpMaps = new ArrayList<>();
+        for (Map map : this.maps) {
+            if  (map.getIsRankUp()) {
+                rankUpMaps.add(map);
+            }
+        }
+        return rankUpMaps;
     }
 
     public void deserialize() {

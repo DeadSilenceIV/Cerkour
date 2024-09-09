@@ -21,7 +21,7 @@ public class ProfileCommand implements CommandExecutor {
             }
         }
         else {
-            player.sendMessage("§6§lCerkour§e> Please specify subcommand!"); //perhaps make this display all subcommands instead
+            player.sendMessage("§6§lCerkour§e> Profile Subcommands: \n§e- §6§lsetrankup §e(player) (rank)"); //perhaps make this display all subcommands instead
         }
         return true;
     }
