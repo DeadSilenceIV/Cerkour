@@ -8,6 +8,8 @@ import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -55,10 +57,10 @@ public class Profile {
     public void joinMap(Map map, Player player) {
         if (map.getStartLocation() != null) {
             this.map = map;
-            player.teleport(map.getStartLocation());
             player.setGameMode(GameMode.ADVENTURE);
             player.getInventory().clear();
             InventoryUtils.gameInventory(player);
+            player.teleport(map.getStartLocation());
         }
     }
 

@@ -7,10 +7,10 @@ import org.bukkit.entity.Player;
 public class SoundUtils {
     public static Sound determineSoundRankUp(int i) {
         if (i < 7) {
-            return Sound.FIREWORK_BLAST;
+            return Sound.CAT_MEOW;
         }
         else if (i < 10) {
-            return Sound.FIREWORK_LARGE_BLAST;
+            return Sound.CAT_PURREOW;
         }
         else if (i < 13) {
             return Sound.WITHER_SPAWN;

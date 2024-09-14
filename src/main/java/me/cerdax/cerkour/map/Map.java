@@ -16,7 +16,6 @@ public class Map {
     private final String name;
     private int rankUp;
 
-
     public Map(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;

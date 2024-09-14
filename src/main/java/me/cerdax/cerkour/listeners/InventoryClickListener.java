@@ -49,7 +49,7 @@ public class InventoryClickListener implements Listener {
                 ItemStack itemStack = e.getCurrentItem();
                 if (itemStack != null && itemStack.getItemMeta() != null && itemStack.getItemMeta().getDisplayName() != null && itemStack.getType() == Material.PAPER) {
                     Map map = null;
-                    for (int i = 1; i < 13; i++) {
+                    for (int i = 1; i < 14; i++) {
                         if (Cerkour.getInstance().getMapManager().getMapByRankUp(i) != null) {
                             if (Objects.equals(RankUtils.getColoredRank(Cerkour.getInstance().getMapManager().getMapByRankUp(i).getRankUp()), e.getCurrentItem().getItemMeta().getDisplayName())) {
                                 map = Cerkour.getInstance().getMapManager().getMapByRankUp(i);

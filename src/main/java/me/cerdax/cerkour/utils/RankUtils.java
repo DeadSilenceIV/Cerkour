@@ -43,6 +43,9 @@ public class RankUtils {
         if (i == 13) {
             return "§9§lXIII";
         }
+        if (i == 14) {
+            return "§9§lXIV";
+        }
         return null;
     }
 }

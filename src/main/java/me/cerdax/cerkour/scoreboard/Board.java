@@ -36,12 +36,12 @@ public class Board implements Runnable{
         objective.setDisplayName("§6§lCerkour");
 
         objective.getScore(ChatColor.WHITE + "").setScore(10);
-        objective.getScore("§6Name:").setScore(9);
+        objective.getScore("§6§lName").setScore(9);
         objective.getScore("§e" + player.getName()).setScore(8);
         objective.getScore(ChatColor.RED + "").setScore(7);
-        objective.getScore("§6Rank:").setScore(6);
+        objective.getScore("§6§lRank").setScore(6);
         objective.getScore(ChatColor.BLACK + "").setScore(4);
-        objective.getScore("§6Online:").setScore(3);
+        objective.getScore("§6§lOnline").setScore(3);
         objective.getScore(ChatColor.DARK_GREEN + "").setScore(1);
         objective.getScore("§6play.cerkour.net").setScore(0);
 
