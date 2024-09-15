@@ -13,6 +13,7 @@ me\cerdax\cerkour\utils\RankUtils.class
 me\cerdax\cerkour\map\Map.class
 me\cerdax\cerkour\listeners\PlayerDropItemListener.class
 me\cerdax\cerkour\listeners\AsyncPlayerChatListener.class
+me\cerdax\cerkour\listeners\WeatherChangeListener.class
 me\cerdax\cerkour\utils\SoundUtils.class
 me\cerdax\cerkour\map\CheckPoint.class
 me\cerdax\cerkour\commands\MapCommand.class

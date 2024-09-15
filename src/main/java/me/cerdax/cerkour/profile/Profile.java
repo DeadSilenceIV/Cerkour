@@ -2,6 +2,7 @@ package me.cerdax.cerkour.profile;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
@@ -55,12 +56,27 @@ public class Profile {
     }
 
     public void joinMap(Map map, Player player) {
-        if (map.getStartLocation() != null) {
+        if (map.getStartLocation() != null && map.getEndLocation() != null) {
             this.map = map;
-            player.setGameMode(GameMode.ADVENTURE);
-            player.getInventory().clear();
-            InventoryUtils.gameInventory(player);
-            player.teleport(map.getStartLocation());
+            if ((map.getIsRankUp() && map.getRankUp() <= getRankUp()) || !map.getIsRankUp()) {
+                map.teleportToCheckPoint(player);
+                player.setGameMode(GameMode.ADVENTURE);
+                player.getInventory().clear();
+                InventoryUtils.gameInventory(player);
+            }
+            else if (!map.getIsRankUp()) {
+                map.teleportToCheckPoint(player);
+                player.setGameMode(GameMode.ADVENTURE);
+                player.getInventory().clear();
+                InventoryUtils.gameInventory(player);
+            }
+            else {
+                player.sendMessage("§6§lCerkour§e> You may not join this map, you need to be a higher rank!");
+                this.map = null;
+            }
+        }
+        else {
+            player.sendMessage("§6§lCerkour§e> You may not join this map");
         }
     }
 

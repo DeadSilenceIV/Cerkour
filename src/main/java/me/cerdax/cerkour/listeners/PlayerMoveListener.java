@@ -42,10 +42,11 @@ public class PlayerMoveListener implements Listener {
                     break;
                 }
             }
-            if (map.getEndLocation().getBlockZ() == z && map.getEndLocation().getBlockX() == x && map.getEndLocation().getBlockY() == y) {
+            if (map.getEndLocation().getBlockZ() == z && map.getEndLocation().getBlockX() == x && (map.getEndLocation().getBlockY() <= y && map.getEndLocation().getBlockY() <= y + 1.25)) {
                 for (CheckPoint c : map.getCheckpoints()) {
                     if (c.getPlayers().contains(player.getName())) {
                         c.removePlayer(player.getName());
+                        map.serialize();
                     }
                 }
                 if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
@@ -61,18 +62,7 @@ public class PlayerMoveListener implements Listener {
             }
             if (e.getFrom().distance(e.getTo()) > 0.1D) {
                 if (!player.isSprinting()) {
-                    boolean exist = false;
-                    if (map.getCheckpoints() != null) {
-                        for (CheckPoint c : map.getCheckpoints()) {
-                            if (c.getPlayers().contains(player.getName())) {
-                                player.teleport(c.getTo());
-                                exist = true;
-                            }
-                        }
-                    }
-                    if (!exist) {
-                        player.teleport(map.getStartLocation());
-                    }
+                    map.teleportToCheckPoint(player);
                 }
             }
         }

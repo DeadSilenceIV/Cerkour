@@ -17,12 +17,7 @@ public class JoinCommand implements CommandExecutor {
             if (args.length > 0) {
                 Map map = Cerkour.getInstance().getMapManager().getMapByName(args[0]);
                 if (map != null) {
-                    if ((map.getIsRankUp() && map.getRankUp() <= profile.getRankUp()) || !map.getIsRankUp()) {
-                        profile.joinMap(map, player);
-                    }
-                    else {
-                        player.sendMessage("§6§lCerkour§e> You may not join this map");
-                    }
+                    profile.joinMap(map, player);
                 }
                 else {
                     player.sendMessage("§6§lCerkour§e> Map not found!");

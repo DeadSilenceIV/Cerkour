@@ -91,12 +91,12 @@ public class MapCommand implements CommandExecutor {
                             if (map.getCheckPoint(Integer.parseInt(args[2])).isLd()) {
                                 map.getCheckPoint(Integer.parseInt(args[2])).setLd(false);
                                 map.serialize();
-                                player.sendMessage("§6§lCerkour§e> The checkpoint is now l/d!");
+                                player.sendMessage("§6§lCerkour§e> The checkpoint: §6" + args[2] + " §eis no longer l/d!");
                             }
                             else {
                                 map.getCheckPoint(Integer.parseInt(args[2])).setLd(true);
                                 map.serialize();
-                                player.sendMessage("§6§lCerkour§e> The checkpoint is no longer l/d!");
+                                player.sendMessage("§6§lCerkour§e> The checkpoint: §6" + args[2] + " §eis now l/d!");
                             }
                         }
                         else {
@@ -139,7 +139,7 @@ public class MapCommand implements CommandExecutor {
                 }
             }
             else {
-                player.sendMessage("§6§lCerkour§e> Map Subcommands: \n§e- §6§lcreate §e(map name) \n§e- §6§lsetstart §e(map name) \n§e- §6§lsetend §e(map name) \n§e- §6§lrankup §e(map name) (rank) \n§e- §6§lremove §e(map name) \n§e- §6§llist \n§e- §6§lsetspawn §e// sets lobby spawn, dont use this for map creation");
+                player.sendMessage("§6§lCerkour§e> Map Subcommands: \n§e- §6§lcreate §e(map name) \n§e- §6§lsetstart §e(map name) \n§e- §6§lsetend §e(map name) \n§e- §6§lrankup §e(map name) (rank) \n§e- §6§lremove §e(map name) \n§e- §6§laddcp §e(map name) (checkpoint number) \n§e- §6§lsetcpfrom §e(map name) (checkpoint number) \n§e- §6§lsetcpto §e(map name) (checkpoint number) \n§e- §6§lsetcpld §e(map name) (checkpoint number) \n§e- §6§llist \n§e- §6§lsetspawn §e// sets lobby spawn, dont use this for map creation");
             }
         }
         return true;

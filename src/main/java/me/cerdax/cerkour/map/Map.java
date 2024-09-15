@@ -7,7 +7,9 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -98,6 +100,20 @@ public class Map {
     public void addCheckPoint(int index) {
         this.checkpoints.add(new CheckPoint(index));
         serialize();
+    }
+
+    public void teleportToCheckPoint(Player player) {
+        boolean exist = false;
+        for (CheckPoint c : getCheckpoints()) {
+            if (c.getPlayers().contains(player.getName())) {
+                player.teleport(c.getTo());
+                exist = true;
+                break;
+            }
+        }
+        if (!exist) {
+            player.teleport(getStartLocation());
+        }
     }
 
     private boolean doesMapExist() {

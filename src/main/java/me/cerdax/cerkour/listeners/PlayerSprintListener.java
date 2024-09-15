@@ -15,20 +15,8 @@ public class PlayerSprintListener implements Listener {
     public void onPlayerSprint(PlayerToggleSprintEvent e) {
         Player player = e.getPlayer();
         Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
-        Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         if (map != null && !e.isSprinting()) {
-            boolean exist = false;
-            if (map.getCheckpoints() != null) {
-                for (CheckPoint c : map.getCheckpoints()) {
-                    if (c.getPlayers().contains(player.getName())) {
-                        player.teleport(c.getTo());
-                        exist = true;
-                    }
-                }
-            }
-            if (!exist) {
-                player.teleport(map.getStartLocation());
-            }
+            map.teleportToCheckPoint(player);
         }
     }
 }

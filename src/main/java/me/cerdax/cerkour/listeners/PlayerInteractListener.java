@@ -42,7 +42,7 @@ public class PlayerInteractListener implements Listener {
             }
             else if (e.getItem().getType() == Material.QUARTZ) {
                 if (e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName().equals("§6Reset")) {
-                    player.teleport(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap().getStartLocation());
+                    Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap().teleportToCheckPoint(player);
                 }
             }
             else if (e.getItem().getType() == Material.REDSTONE) {
