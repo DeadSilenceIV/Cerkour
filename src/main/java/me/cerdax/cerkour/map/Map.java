@@ -1,11 +1,9 @@
 package me.cerdax.cerkour.map;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
@@ -22,6 +20,7 @@ public class Map {
     private final String name;
     private int rankUp;
     private List<CheckPoint> checkpoints;
+    private List<TickTimer> timers;
 
     public Map(String name) {
         this.uuid = UUID.randomUUID();
@@ -30,16 +29,57 @@ public class Map {
         this.endLocation = null;
         this.rankUp = 0;
         this.checkpoints = new ArrayList<>();
+        this.timers = new ArrayList<>();
         serialize();
     }
 
-    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints) {
+    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers) {
         this.uuid = uuid;
         this.name = name;
         this.startLocation = spawnLocation;
         this.endLocation = endLocation;
         this.rankUp = rankUp;
         this.checkpoints = checkpoints;
+        this.timers = timers;
+    }
+
+    public void toggleTimer(boolean toggle, Player player) {
+        if (toggle) {
+            TickTimer playerTimer = getTimer(player);
+            for (TickTimer timer : getTimers()) {
+                if (timer == playerTimer) {
+                    timer.start(player);
+                }
+            }
+        } else {
+            for (TickTimer timer : getTimers()) {
+                if (timer.getProfile(player) == Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId())) {
+                    timer.stop(player);
+                    serialize();
+                }
+            }
+        }
+    }
+
+    public List<TickTimer> getTimers() {
+        return this.timers;
+    }
+
+    public TickTimer getTimer(Player player) {
+        if (this.timers != null) {
+            for (TickTimer timer : getTimers()) {
+                if (timer.getPlayerName().equalsIgnoreCase(player.getName())) {
+                    return timer;
+                }
+            }
+        }
+        else {
+            this.timers = new ArrayList<>();
+
+        }
+        TickTimer timer = new TickTimer(player.getName());
+        this.timers.add(timer);
+        return timer;
     }
 
     public String getName() {
@@ -102,18 +142,13 @@ public class Map {
         serialize();
     }
 
-    public void teleportToCheckPoint(Player player) {
-        boolean exist = false;
+    public Location getCheckPointLocation(Player player) {
         for (CheckPoint c : getCheckpoints()) {
             if (c.getPlayers().contains(player.getName())) {
-                player.teleport(c.getTo());
-                exist = true;
-                break;
+                return c.getTo();
             }
         }
-        if (!exist) {
-            player.teleport(getStartLocation());
-        }
+        return getStartLocation();
     }
 
     private boolean doesMapExist() {
@@ -147,6 +182,13 @@ public class Map {
                 }
                 List<String> playerNames = c.getPlayers();
                 config.set(checkpointPath + ".players", playerNames);
+            }
+        }
+        if (getTimers() != null && !getTimers().isEmpty()) {
+            config.createSection("maps." + getMapUUID().toString() + ".timers");
+            for (TickTimer timer : getTimers()) {
+                String timerPath = "maps." + getMapUUID().toString() + ".timers." + timer.getPlayerName();
+                config.set(timerPath + ".ticks", timer.getTicks());
             }
         }
         config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());

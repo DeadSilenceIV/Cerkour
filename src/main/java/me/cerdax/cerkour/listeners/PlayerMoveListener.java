@@ -4,6 +4,7 @@ import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.utils.ActionBarUtils;
 import me.cerdax.cerkour.utils.RankUtils;
 import me.cerdax.cerkour.utils.SoundUtils;
 import org.bukkit.Bukkit;
@@ -30,6 +31,21 @@ public class PlayerMoveListener implements Listener {
         int z = to.getBlockZ();
 
         if (map != null) {
+            if (player.getLocation().getX() != map.getStartLocation().getX() || player.getLocation().getZ() != map.getStartLocation().getZ()) {
+                if (!map.getTimer(player).getIsRunning()) {
+                    map.toggleTimer(true, player);
+                }
+            }
+
+            else if (player.getLocation().getX() == map.getStartLocation().getX() && player.getLocation().getZ() == map.getStartLocation().getZ() && player.getLocation().getY() == map.getStartLocation().getY()) {
+                if (map.getTimer(player).getIsRunning()) {
+                    map.getTimer(player).stop(player);
+                }
+                else {
+                    map.getTimer(player).resetTimer();
+                }
+            }
+
             for (CheckPoint c : map.getCheckpoints()) {
                 if (c.getFrom().getBlockX() == x && c.getFrom().getBlockY() == y && c.getFrom().getBlockZ() == z) {
                     if (!c.getPlayers().contains(player.getName())) {
@@ -44,6 +60,7 @@ public class PlayerMoveListener implements Listener {
                 }
             }
             if (map.getEndLocation().getBlockZ() == z && map.getEndLocation().getBlockX() == x && (map.getEndLocation().getBlockY() <= y && map.getEndLocation().getBlockY() <= y + 1.25)) {
+                map.toggleTimer(false, player);
                 for (CheckPoint c : map.getCheckpoints()) {
                     if (c.getPlayers().contains(player.getName())) {
                         c.removePlayer(player.getName());
@@ -57,13 +74,22 @@ public class PlayerMoveListener implements Listener {
                     SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
                 }
                 else {
-                    player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName());
+                    player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                 }
+                map.getTimer(player).resetTimer();
                 profile.leaveMap(player);
             }
             if (e.getFrom().distance(e.getTo()) > 0.1D) {
                 if (!player.isSprinting()) {
-                    map.teleportToCheckPoint(player);
+                    player.teleport(map.getCheckPointLocation(player));
+                    if (map.getCheckPointLocation(player) == map.getStartLocation()) {
+                        if (map.getTimer(player).getIsRunning()) {
+                            map.getTimer(player).stop(player);
+                        }
+                        else {
+                            map.getTimer(player).resetTimer();
+                        }
+                    }
                 }
             }
         }

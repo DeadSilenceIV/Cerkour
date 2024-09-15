@@ -8,6 +8,8 @@ me\cerdax\cerkour\profile\ProfileManager.class
 me\cerdax\cerkour\listeners\PlayerJoinListener.class
 me\cerdax\cerkour\listeners\EntityDamageListener.class
 me\cerdax\cerkour\listeners\PlayerInteractListener.class
+me\cerdax\cerkour\map\TickTimer$1.class
+me\cerdax\cerkour\utils\ActionBarUtils.class
 me\cerdax\cerkour\listeners\PlayerSprintListener.class
 me\cerdax\cerkour\utils\RankUtils.class
 me\cerdax\cerkour\map\Map.class
@@ -25,4 +27,5 @@ me\cerdax\cerkour\Cerkour.class
 me\cerdax\cerkour\commands\ProfileCommand.class
 me\cerdax\cerkour\commands\LeaveCommand.class
 me\cerdax\cerkour\profile\Profile.class
+me\cerdax\cerkour\map\TickTimer.class
 me\cerdax\cerkour\listeners\PlayerMoveListener.class

@@ -102,6 +102,8 @@ public class MapManager {
 
                 List<CheckPoint> checkPoints = new ArrayList<>();
 
+                List<TickTimer> timers = new ArrayList<>();
+
                 ConfigurationSection checkPointSection = mapSection.getConfigurationSection("checkpoints");
 
                 if (checkPointSection != null) {
@@ -123,7 +125,22 @@ public class MapManager {
                         }
                     }
                 }
-                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints);
+
+                ConfigurationSection timerSections = mapSection.getConfigurationSection("timers");
+
+                if (timerSections != null) {
+                    for (String timerKey : timerSections.getKeys(false)) {
+                        ConfigurationSection timerSection = timerSections.getConfigurationSection(timerKey);
+
+                        if (timerSection != null) {
+                            long ticks = timerSection.getLong("ticks");
+                            TickTimer playerTimer = new TickTimer(timerKey);
+                            playerTimer.setTicks(ticks);
+                            timers.add(playerTimer);
+                        }
+                    }
+                }
+                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints, timers);
                 maps.add(map);
             }
         }

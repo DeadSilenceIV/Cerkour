@@ -1,7 +1,9 @@
 package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.utils.ActionBarUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,11 +17,13 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 
+
 public class PlayerInteractListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         Player player = e.getPlayer();
+        Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         if (e.getItem() != null && (e.getAction() == Action.RIGHT_CLICK_BLOCK || e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.LEFT_CLICK_BLOCK || e.getAction() == Action.LEFT_CLICK_AIR)) {
             if (e.getItem().getType() == Material.COMPASS) {
                 if (e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName().equals("§6Server Selector")) {
@@ -42,7 +46,16 @@ public class PlayerInteractListener implements Listener {
             }
             else if (e.getItem().getType() == Material.QUARTZ) {
                 if (e.getItem().getItemMeta() != null && e.getItem().getItemMeta().getDisplayName().equals("§6Reset")) {
-                    Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap().teleportToCheckPoint(player);
+                    Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
+                    if (map.getCheckPointLocation(player) == map.getStartLocation()) {
+                        if (map.getTimer(player).getIsRunning()) {
+                            map.getTimer(player).stop(player);
+                        }
+                        else {
+                            map.getTimer(player).resetTimer();
+                        }
+                    }
+                    player.teleport(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap().getCheckPointLocation(player));
                 }
             }
             else if (e.getItem().getType() == Material.REDSTONE) {

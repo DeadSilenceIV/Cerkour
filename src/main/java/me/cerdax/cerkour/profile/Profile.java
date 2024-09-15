@@ -4,14 +4,19 @@ import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
+import me.cerdax.cerkour.map.TickTimer;
+import me.cerdax.cerkour.utils.ActionBarUtils;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 
@@ -59,13 +64,19 @@ public class Profile {
         if (map.getStartLocation() != null && map.getEndLocation() != null) {
             this.map = map;
             if ((map.getIsRankUp() && map.getRankUp() <= getRankUp()) || !map.getIsRankUp()) {
-                map.teleportToCheckPoint(player);
+                if (map.getCheckPointLocation(player) != map.getStartLocation()) {
+                    map.toggleTimer(true, player);
+                }
+                player.teleport(map.getCheckPointLocation(player));
                 player.setGameMode(GameMode.ADVENTURE);
                 player.getInventory().clear();
                 InventoryUtils.gameInventory(player);
             }
             else if (!map.getIsRankUp()) {
-                map.teleportToCheckPoint(player);
+                if (map.getCheckPointLocation(player) != map.getStartLocation()) {
+                    map.toggleTimer(true, player);
+                }
+                player.teleport(map.getCheckPointLocation(player));
                 player.setGameMode(GameMode.ADVENTURE);
                 player.getInventory().clear();
                 InventoryUtils.gameInventory(player);
@@ -82,10 +93,14 @@ public class Profile {
 
     public void leaveMap(Player player) {
         if (this.map != null) {
+            if (map.getTimer(player).getIsRunning()) {
+                map.toggleTimer(false, player);
+            }
             this.map = null;
             player.teleport(LocationUtils.getSpawn());
             player.getInventory().clear();
             InventoryUtils.lobbyInventory(player);
+            ActionBarUtils.sendActionbar(player, " ");
         }
     }
 
