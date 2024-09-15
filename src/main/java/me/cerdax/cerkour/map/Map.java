@@ -1,12 +1,16 @@
 package me.cerdax.cerkour.map;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 public class Map {
 
@@ -15,6 +19,7 @@ public class Map {
     private Location endLocation;
     private final String name;
     private int rankUp;
+    private List<CheckPoint> checkpoints;
 
     public Map(String name) {
         this.uuid = UUID.randomUUID();
@@ -22,15 +27,17 @@ public class Map {
         this.startLocation = null;
         this.endLocation = null;
         this.rankUp = 0;
+        this.checkpoints = new ArrayList<>();
         serialize();
     }
 
-    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp) {
+    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints) {
         this.uuid = uuid;
         this.name = name;
         this.startLocation = spawnLocation;
         this.endLocation = endLocation;
         this.rankUp = rankUp;
+        this.checkpoints = checkpoints;
     }
 
     public String getName() {
@@ -75,19 +82,59 @@ public class Map {
         return this.endLocation;
     }
 
+    public List<CheckPoint> getCheckpoints() {
+        return this.checkpoints;
+    }
+
+    public CheckPoint getCheckPoint(int index) {
+        for (CheckPoint cp : this.checkpoints) {
+            if (cp.getIndex() == index) {
+                return cp;
+            }
+        }
+        return null;
+    }
+
+    public void addCheckPoint(int index) {
+        this.checkpoints.add(new CheckPoint(index));
+        serialize();
+    }
+
+    private boolean doesMapExist() {
+        FileConfiguration config = CustomFiles.getCustomFile("maps");
+        return config.contains("maps." + getMapUUID().toString());
+    }
+
     public void serialize() {
         FileConfiguration config = CustomFiles.getCustomFile("maps");
-        if (config != null) {
-            config.set("maps." + getMapUUID().toString(), null); // Clear existing data
-            config.set("maps." + getMapUUID().toString() + ".name", getName());
-            if (getStartLocation() != null) {
-                config.set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
-            }
-            if (getEndLocation() != null) {
-                config.set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
-            }
-            config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
-            CustomFiles.saveCustomFile("maps");
+        if (config != null && !doesMapExist()) {
+            config.createSection("maps." + getMapUUID().toString());
         }
+        config.set("maps." + getMapUUID().toString() + ".name", getName());
+        if (getStartLocation() != null) {
+            config.set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
+        }
+        if (getEndLocation() != null) {
+            config.set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
+        }
+        if (getCheckpoints() != null && !getCheckpoints().isEmpty()) {
+            config.createSection("maps." + getMapUUID().toString() + ".checkpoints");
+            for (CheckPoint c : getCheckpoints()) {
+                String checkpointPath = "maps." + getMapUUID().toString() + ".checkpoints.checkpoint" + c.getIndex();
+                config.set(checkpointPath + ".index", c.getIndex());
+                config.set(checkpointPath + ".ld", c.isLd());
+                if (c.getFrom() != null) {
+                    config.set(checkpointPath + ".from", LocationUtils.locationToString(c.getFrom()));
+                }
+                if (c.getTo() != null) {
+                    config.set(checkpointPath + ".to", LocationUtils.locationToString(c.getTo()));
+                }
+                List<String> playerNames = c.getPlayers();
+                config.set(checkpointPath + ".players", playerNames);
+            }
+        }
+        config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
+        CustomFiles.saveCustomFile("maps");
     }
+
 }

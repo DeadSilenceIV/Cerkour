@@ -1,6 +1,7 @@
 package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
 import org.bukkit.entity.Player;
@@ -16,7 +17,18 @@ public class PlayerSprintListener implements Listener {
         Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         if (map != null && !e.isSprinting()) {
-            player.teleport(map.getStartLocation());
+            boolean exist = false;
+            if (map.getCheckpoints() != null) {
+                for (CheckPoint c : map.getCheckpoints()) {
+                    if (c.getPlayers().contains(player.getName())) {
+                        player.teleport(c.getTo());
+                        exist = true;
+                    }
+                }
+            }
+            if (!exist) {
+                player.teleport(map.getStartLocation());
+            }
         }
     }
 }

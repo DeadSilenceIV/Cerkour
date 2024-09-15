@@ -19,16 +19,14 @@ public class MapCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (sender instanceof Player) {
             Player player = (Player) sender;
-            Location from = null;
-            Location to = null;
             if (args.length > 0) {
                 if (args.length > 1) {
+                    Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                     if (args[0].equalsIgnoreCase("create")) {
-                        Map map = Cerkour.getInstance().getMapManager().createMap(args[1]);
-                        player.sendMessage("§6§lCerkour§e> You created the map: §6" + args[1]);
+                         Map create = Cerkour.getInstance().getMapManager().createMap(args[1]);
+                        player.sendMessage("§6§lCerkour§e> You created the map: §6" + create.getName());
                     }
                     else if (args[0].equalsIgnoreCase("rankup")) {
-                        Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                         if (map != null) {
                             if (args.length < 3) {
                                 if (map.getIsRankUp()) {
@@ -49,7 +47,6 @@ public class MapCommand implements CommandExecutor {
                         }
                     }
                     else if (args[0].equalsIgnoreCase("setstart")) {
-                        Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                         if (map != null) {
                             map.setStartLocation(player.getLocation());
                             player.sendMessage("§6§lCerkour§e> You set the start of map: §6" + map.getName());
@@ -59,7 +56,6 @@ public class MapCommand implements CommandExecutor {
                         }
                     }
                     else if (args[0].equalsIgnoreCase("setend")) {
-                        Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                         if (map != null) {
                             int x = player.getLocation().getBlockX();
                             int y = player.getLocation().getBlockY();
@@ -73,10 +69,55 @@ public class MapCommand implements CommandExecutor {
                         }
                     }
                     else if (args[0].equalsIgnoreCase("remove")) {
-                        Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                         if (map != null) {
                             player.sendMessage("§6§lCerkour§e> You removed the map §6" + map.getName());
                             Cerkour.getInstance().getMapManager().removeMap(map.getName());
+                        }
+                        else {
+                            player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("addcp")) {
+                        if (map != null) {
+                            map.addCheckPoint(Integer.parseInt(args[2]));
+                            player.sendMessage("§6§lCerkour§e> You added checkpoint: §6" + args[2] + "§e to map: §6" + args[1] + "§e!");
+                        }
+                        else {
+                            player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setcpld")) {
+                        if (map != null) {
+                            if (map.getCheckPoint(Integer.parseInt(args[2])).isLd()) {
+                                map.getCheckPoint(Integer.parseInt(args[2])).setLd(false);
+                                map.serialize();
+                                player.sendMessage("§6§lCerkour§e> The checkpoint is now l/d!");
+                            }
+                            else {
+                                map.getCheckPoint(Integer.parseInt(args[2])).setLd(true);
+                                map.serialize();
+                                player.sendMessage("§6§lCerkour§e> The checkpoint is no longer l/d!");
+                            }
+                        }
+                        else {
+                            player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setcpfrom")) {
+                        if (map != null) {
+                            map.getCheckPoint(Integer.parseInt(args[2])).setFrom(player.getLocation());
+                            map.serialize();
+                            player.sendMessage("§6§lCerkour§e> You set the FROM Location");
+                        }
+                        else {
+                            player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setcpto")) {
+                        if (map != null) {
+                            map.getCheckPoint(Integer.parseInt(args[2])).setTo(player.getLocation());
+                            player.sendMessage("§6§lCerkour§e> You set the TO Location");
+                            map.serialize();
                         }
                         else {
                             player.sendMessage("§6§lCerkour§e> Map not found!");

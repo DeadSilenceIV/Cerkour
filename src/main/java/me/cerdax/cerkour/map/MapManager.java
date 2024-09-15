@@ -5,8 +5,10 @@ import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Player;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -85,7 +87,6 @@ public class MapManager {
             return;
         }
 
-
         for (String uuidStr : section.getKeys(false)) {
             ConfigurationSection mapSection = config.getConfigurationSection("maps." + uuidStr);
 
@@ -99,7 +100,30 @@ public class MapManager {
                 Location spawnLoc = strSpawn != null ? LocationUtils.stringToLocation(strSpawn) : null;
                 Location endLoc = strEnd != null ? LocationUtils.stringToLocation(strEnd) : null;
 
-                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp);
+                List<CheckPoint> checkPoints = new ArrayList<>();
+
+                ConfigurationSection checkPointSection = mapSection.getConfigurationSection("checkpoints");
+
+                if (checkPointSection != null) {
+                    for(String checkpointKey : checkPointSection.getKeys(false)){
+                        ConfigurationSection checkpointSection = checkPointSection.getConfigurationSection(checkpointKey);
+
+                        if (checkpointSection != null) {
+                            int index = checkpointSection.getInt("index");
+                            boolean ld = checkpointSection.getBoolean("ld");
+                            String strLocFrom = checkpointSection.getString("from");
+                            String strLocTo = checkpointSection.getString("to");
+
+                            Location fromLoc = strLocFrom != null ? LocationUtils.stringToLocation(strLocFrom) : null;
+                            Location toLoc = strLocTo != null ? LocationUtils.stringToLocation(strLocTo) : null;
+
+                            List<String> players = checkpointSection.getStringList("players");
+
+                            checkPoints.add(new CheckPoint(index, ld, fromLoc, toLoc, players));
+                        }
+                    }
+                }
+                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints);
                 maps.add(map);
             }
         }

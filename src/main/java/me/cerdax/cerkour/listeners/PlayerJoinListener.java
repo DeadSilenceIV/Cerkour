@@ -2,9 +2,11 @@ package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
+import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -22,6 +24,5 @@ public class PlayerJoinListener implements Listener {
         e.setJoinMessage("§e[§a§l+§e] §6" + player.getName());
         player.getInventory().clear();
         InventoryUtils.lobbyInventory(player);
-        Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
     }
 }
