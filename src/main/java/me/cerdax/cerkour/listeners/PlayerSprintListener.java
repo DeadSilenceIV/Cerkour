@@ -19,7 +19,7 @@ public class PlayerSprintListener implements Listener {
         Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
         if (map != null) {
             ActionBarUtils.sendActionbar(player, "§e§l" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
-            if (!e.isSprinting()) {
+            if (!e.isSprinting() && map.isOS()) {
                 player.teleport(map.getCheckPointLocation(player));
                 if (map.getCheckPointLocation(player) == map.getStartLocation()) {
                     if (map.getTimer(player).getIsRunning()) {

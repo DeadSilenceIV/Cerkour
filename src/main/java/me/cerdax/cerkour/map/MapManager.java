@@ -96,6 +96,7 @@ public class MapManager {
                 String strSpawn = mapSection.getString("spawn");
                 String strEnd = mapSection.getString("end");
                 int rankUp = mapSection.getInt("rankup", 0);
+                int state = mapSection.getInt("state");
 
                 Location spawnLoc = strSpawn != null ? LocationUtils.stringToLocation(strSpawn) : null;
                 Location endLoc = strEnd != null ? LocationUtils.stringToLocation(strEnd) : null;
@@ -140,7 +141,7 @@ public class MapManager {
                         }
                     }
                 }
-                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints, timers);
+                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints, timers, state);
                 maps.add(map);
             }
         }

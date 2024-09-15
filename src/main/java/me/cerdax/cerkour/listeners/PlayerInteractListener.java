@@ -6,6 +6,7 @@ import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 
 public class PlayerInteractListener implements Listener {
@@ -31,15 +33,29 @@ public class PlayerInteractListener implements Listener {
                     ItemStack glass = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)15);
                     ItemMeta glassMeta = glass.getItemMeta();
                     glassMeta.setDisplayName(" ");
+                    glass.setItemMeta(glassMeta);
                     Arrays.<Integer>asList(new Integer[] {
                             Integer.valueOf(0), Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(4), Integer.valueOf(5), Integer.valueOf(6), Integer.valueOf(7), Integer.valueOf(8), Integer.valueOf(9),
                             Integer.valueOf(18), Integer.valueOf(27), Integer.valueOf(36), Integer.valueOf(17), Integer.valueOf(26), Integer.valueOf(35), Integer.valueOf(37), Integer.valueOf(38), Integer.valueOf(39), Integer.valueOf(40),
                             Integer.valueOf(41), Integer.valueOf(42), Integer.valueOf(43), Integer.valueOf(44) }).forEach(integer -> inventory.setItem(integer.intValue(), glass));
+                    ItemStack os = new ItemStack(Material.DIRT);
+                    ItemMeta osMeta = os.getItemMeta();
+                    osMeta.setDisplayName("§8* " + "§6OS");
+                    osMeta.setLore(Collections.singletonList("§eOnlySprint maps of all difficulties!"));
+                    os.setItemMeta(osMeta);
+                    inventory.setItem(24, os);
                     ItemStack rankUp = new ItemStack(Material.GRASS);
                     ItemMeta rankUpMeta = rankUp.getItemMeta();
                     rankUpMeta.setDisplayName("§8* " + "§6OS Rankup");
+                    rankUpMeta.setLore(Collections.singletonList("§eComplete maps to rankup, test your skill!"));
                     rankUp.setItemMeta(rankUpMeta);
                     inventory.setItem(22, rankUp);
+                    ItemStack speedRun = new ItemStack(Material.STONE);
+                    ItemMeta speedRunMeta = speedRun.getItemMeta();
+                    speedRunMeta.setDisplayName("§8* " + "§6Speedrun");
+                    speedRunMeta.setLore(Collections.singletonList("§eSee how far you can push your best time!"));
+                    speedRun.setItemMeta(speedRunMeta);
+                    inventory.setItem(20, speedRun);
                     player.openInventory(inventory);
                 }
                 e.setCancelled(true);

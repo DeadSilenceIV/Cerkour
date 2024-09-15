@@ -68,6 +68,18 @@ public class MapCommand implements CommandExecutor {
                             player.sendMessage("§6§lCerkour§e> Map not found!");
                         }
                     }
+                    else if (args[0].equalsIgnoreCase("swapstate")) {
+                        if (map != null) {
+                            if (map.isOS()) {
+                                map.setState(2);
+                                player.sendMessage("§6§lCerkour§e> The map: §6" + map.getName() + "§e is now Speedrun!");
+                            }
+                            else {
+                                map.setState(1);
+                                player.sendMessage("§6§lCerkour§e> The map: §6" + map.getName() + "§e is now OS!");
+                            }
+                        }
+                    }
                     else if (args[0].equalsIgnoreCase("remove")) {
                         if (map != null) {
                             player.sendMessage("§6§lCerkour§e> You removed the map §6" + map.getName());

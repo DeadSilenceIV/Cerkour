@@ -69,7 +69,7 @@ public class PlayerMoveListener implements Listener {
                 }
                 if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
                     profile.setRankUp(profile.getRankUp() + 1);
-                    player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()));
+                    player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                     Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
                     SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
                 }
@@ -80,7 +80,7 @@ public class PlayerMoveListener implements Listener {
                 profile.leaveMap(player);
             }
             if (e.getFrom().distance(e.getTo()) > 0.1D) {
-                if (!player.isSprinting()) {
+                if (!player.isSprinting() && map.isOS()) {
                     player.teleport(map.getCheckPointLocation(player));
                     if (map.getCheckPointLocation(player) == map.getStartLocation()) {
                         if (map.getTimer(player).getIsRunning()) {

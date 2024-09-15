@@ -21,6 +21,7 @@ public class Map {
     private int rankUp;
     private List<CheckPoint> checkpoints;
     private List<TickTimer> timers;
+    private int state; //1 = OS, 2 = Speedrun
 
     public Map(String name) {
         this.uuid = UUID.randomUUID();
@@ -30,10 +31,11 @@ public class Map {
         this.rankUp = 0;
         this.checkpoints = new ArrayList<>();
         this.timers = new ArrayList<>();
+        this.state = 1;
         serialize();
     }
 
-    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers) {
+    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers, int state) {
         this.uuid = uuid;
         this.name = name;
         this.startLocation = spawnLocation;
@@ -41,6 +43,7 @@ public class Map {
         this.rankUp = rankUp;
         this.checkpoints = checkpoints;
         this.timers = timers;
+        this.state = state;
     }
 
     public void toggleTimer(boolean toggle, Player player) {
@@ -93,6 +96,19 @@ public class Map {
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
         serialize();
+    }
+
+    public int getState() {
+        return this.state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+        serialize();
+    }
+
+    public boolean isOS() {
+        return this.state == 1;
     }
 
     public boolean getIsRankUp() {
@@ -192,6 +208,7 @@ public class Map {
             }
         }
         config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
+        config.set("maps." + getMapUUID().toString() + ".state", getState());
         CustomFiles.saveCustomFile("maps");
     }
 
