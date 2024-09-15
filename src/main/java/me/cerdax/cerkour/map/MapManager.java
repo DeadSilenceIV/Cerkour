@@ -11,9 +11,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class MapManager {
 
@@ -64,6 +62,24 @@ public class MapManager {
             }
         }
         return rankUpMaps;
+    }
+
+    public String getLeaderboardString(Map map) {
+        String message = "";
+        if (map != null) {
+            List<TickTimer> timers = new ArrayList<>(map.getTimers());
+            timers.sort((t1, t2) -> Long.compare(t2.getBest(), t1.getBest()));
+            StringBuilder result = new StringBuilder();
+            Collections.reverse(timers);
+            for (int i = 0; i < timers.size(); i++) {
+                if (i == 0) {
+                    result.append(message);
+                }
+                result.append("§e").append(i + 1).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(timers.get(i).getPlayerName()).append("§e\n");
+            }
+            message = result.toString();
+        }
+        return message;
     }
 
     public void deserialize() {
@@ -135,8 +151,10 @@ public class MapManager {
 
                         if (timerSection != null) {
                             long ticks = timerSection.getLong("ticks");
+                            long best = timerSection.getLong("best");
                             TickTimer playerTimer = new TickTimer(timerKey);
                             playerTimer.setTicks(ticks);
+                            playerTimer.setBest(best);
                             timers.add(playerTimer);
                         }
                     }
@@ -145,10 +163,6 @@ public class MapManager {
                 maps.add(map);
             }
         }
-    }
-
-    public List<Map> getMaps() {
-        return this.maps;
     }
 
     private Map getMapByUUID(UUID uuid) {

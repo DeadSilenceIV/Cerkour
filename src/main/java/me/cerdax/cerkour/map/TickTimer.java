@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TickTimer {
 
     private long ticks;
+    private long best;
     private boolean isRunning;
     private static final double TICKS_PER_SECOND = 20.0;
     private String playerName;
@@ -18,6 +19,7 @@ public class TickTimer {
         this.ticks = 0;
         this.isRunning = false;
         this.playerName = playerName;
+        this.best = 0;
     }
 
     public long getTicks() {
@@ -30,6 +32,14 @@ public class TickTimer {
 
     public Profile getProfile(Player player) {
         return Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
+    }
+
+    public long getBest() {
+        return this.best;
+    }
+
+    public void setBest(long ticks) {
+        this.best = ticks;
     }
 
     public void addTick() {

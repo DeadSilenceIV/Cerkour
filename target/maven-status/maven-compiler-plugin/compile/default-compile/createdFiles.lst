@@ -20,6 +20,7 @@ me\cerdax\cerkour\utils\SoundUtils.class
 me\cerdax\cerkour\map\CheckPoint.class
 me\cerdax\cerkour\commands\MapCommand.class
 me\cerdax\cerkour\listeners\InventoryClickListener.class
+me\cerdax\cerkour\commands\LeaderboardCommand.class
 me\cerdax\cerkour\listeners\PlayerQuitListener.class
 me\cerdax\cerkour\scoreboard\Board.class
 me\cerdax\cerkour\map\MapManager.class

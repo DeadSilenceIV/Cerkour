@@ -74,8 +74,21 @@ public class PlayerMoveListener implements Listener {
                     SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
                 }
                 else {
-                    player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                    if (map.getTimer(player).getBest() > map.getTimer(player).getTicks()) {
+                        player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()) + "§e and got a new §6§lPERSONAL BEST §e(-§6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getBest() - map.getTimer(player).getTicks()) + "§e)");
+                        map.getTimer(player).setBest(map.getTimer(player).getTicks());
+                        map.serialize();
+                    }
+                    else if (map.getTimer(player).getBest() == 0) {
+                        player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                        map.getTimer(player).setBest(map.getTimer(player).getTicks());
+                        map.serialize();
+                    }
+                    else {
+                        player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                    }
                 }
+
                 map.getTimer(player).resetTimer();
                 profile.leaveMap(player);
             }

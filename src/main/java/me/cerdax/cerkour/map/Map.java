@@ -205,6 +205,7 @@ public class Map {
             for (TickTimer timer : getTimers()) {
                 String timerPath = "maps." + getMapUUID().toString() + ".timers." + timer.getPlayerName();
                 config.set(timerPath + ".ticks", timer.getTicks());
+                config.set(timerPath + ".best", timer.getBest());
             }
         }
         config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());

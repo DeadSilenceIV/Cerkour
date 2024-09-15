@@ -69,6 +69,7 @@ public final class Cerkour extends JavaPlugin {
         getCommand("leave").setExecutor(new LeaveCommand());
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
+        getCommand("leaderboard").setExecutor(new LeaderboardCommand());
     }
 
     public void registerManagers() {
