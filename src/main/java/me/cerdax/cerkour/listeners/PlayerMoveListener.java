@@ -7,6 +7,7 @@ import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.RankUtils;
 import me.cerdax.cerkour.utils.SoundUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

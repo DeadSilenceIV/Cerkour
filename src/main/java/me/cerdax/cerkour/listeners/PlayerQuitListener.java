@@ -2,6 +2,7 @@ package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

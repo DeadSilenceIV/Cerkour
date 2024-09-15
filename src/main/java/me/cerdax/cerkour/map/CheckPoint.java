@@ -40,15 +40,21 @@ public class CheckPoint {
     }
 
     public Location getFrom() {
-        World world = this.from.getWorld();
-        int x = this.from.getBlockX();
-        int y = this.from.getBlockY();
-        int z = this.from.getBlockZ();
-        return new Location(world, x, y, z);
+        if (this.from != null) {
+            World world = this.from.getWorld();
+            int x = this.from.getBlockX();
+            int y = this.from.getBlockY();
+            int z = this.from.getBlockZ();
+            return new Location(world, x, y, z);
+        }
+        return null;
     }
 
     public Location getTo() {
-        return this.to;
+        if (this.to != null) {
+            return this.to;
+        }
+        return null;
     }
 
     public List<String> getPlayers() {
