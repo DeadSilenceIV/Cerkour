@@ -72,6 +72,7 @@ public class PlayerMoveListener implements Listener {
                     player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                     Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
                     SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
+                    player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
                 }
                 else {
                     if (map.getTimer(player).getBest() > map.getTimer(player).getTicks()) {

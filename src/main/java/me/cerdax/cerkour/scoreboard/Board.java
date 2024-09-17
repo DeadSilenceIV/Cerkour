@@ -30,6 +30,7 @@ public class Board implements Runnable{
 
     private void createNewScoreBoard(Player player) {
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
+
         Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         Objective objective = scoreboard.registerNewObjective("Cerkour", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);

@@ -16,7 +16,7 @@ public class GGCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-            Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " " + player.getDisplayName() + "§8: §r" + String.format("%s%sG%s%sG", ChatColor.GOLD, ChatColor.BOLD, ChatColor.YELLOW, ChatColor.BOLD));
+            Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " §7" + player.getDisplayName() + "§8: §r" + String.format("%s%sG%s%sG", ChatColor.GOLD, ChatColor.BOLD, ChatColor.YELLOW, ChatColor.BOLD));
         }
         return true;
     }

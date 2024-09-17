@@ -2,6 +2,7 @@ package me.cerdax.cerkour.commands;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,6 +19,7 @@ public class ProfileCommand implements CommandExecutor {
             if (args[0].equalsIgnoreCase("setrankup")) {
                 profile.setRankUp(Integer.parseInt(args[2]));
                 player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §erank to: §6" + profile.getRankUp());
+                player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
             }
         }
         else {

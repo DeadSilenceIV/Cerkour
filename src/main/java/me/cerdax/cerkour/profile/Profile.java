@@ -8,6 +8,9 @@ import me.cerdax.cerkour.map.TickTimer;
 import me.cerdax.cerkour.utils.ActionBarUtils;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
+import me.cerdax.cerkour.utils.TitleUtils;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.text.event.ClickEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -71,6 +74,8 @@ public class Profile {
                 player.setGameMode(GameMode.ADVENTURE);
                 player.getInventory().clear();
                 InventoryUtils.gameInventory(player);
+                Audience audience = Cerkour.getInstance().getAdventure().player(player);
+                audience.showTitle(TitleUtils.getTitleJoinMap(map));
             }
             else if (!map.getIsRankUp()) {
                 if (map.getCheckPointLocation(player) != map.getStartLocation()) {

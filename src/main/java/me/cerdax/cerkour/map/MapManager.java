@@ -75,6 +75,9 @@ public class MapManager {
                 if (i == 0) {
                     result.append(message);
                 }
+                if (i == 9) {
+                    break;
+                }
                 result.append("§e").append(i + 1).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(timers.get(i).getPlayerName()).append("§e\n");
             }
             message = result.toString();

@@ -1,5 +1,6 @@
 me\cerdax\cerkour\commands\GGCommand.class
 me\cerdax\cerkour\utils\LocationUtils.class
+me\cerdax\cerkour\utils\TitleUtils.class
 me\cerdax\cerkour\commands\JoinCommand.class
 me\cerdax\cerkour\commands\SpawnCommand.class
 me\cerdax\cerkour\files\CustomFiles.class
@@ -30,3 +31,4 @@ me\cerdax\cerkour\commands\LeaveCommand.class
 me\cerdax\cerkour\profile\Profile.class
 me\cerdax\cerkour\map\TickTimer.class
 me\cerdax\cerkour\listeners\PlayerMoveListener.class
+me\cerdax\cerkour\tablist\TablistAnimation.class

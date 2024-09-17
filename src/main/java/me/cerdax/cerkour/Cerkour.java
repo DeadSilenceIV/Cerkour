@@ -6,11 +6,15 @@ import me.cerdax.cerkour.listeners.*;
 import me.cerdax.cerkour.map.MapManager;
 import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.scoreboard.Board;
+import me.cerdax.cerkour.tablist.TablistAnimation;
+import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 public final class Cerkour extends JavaPlugin {
 
@@ -18,6 +22,15 @@ public final class Cerkour extends JavaPlugin {
     private MapManager mapManager;
     private ProfileManager profileManager;
     private BukkitTask task;
+    private BukkitTask task1;
+    private BukkitAudiences adventure;
+
+    public BukkitAudiences adventure() {
+        if(this.adventure == null) {
+            throw new IllegalStateException("Tried to access Adventure when the plugin was disabled!");
+        }
+        return this.adventure;
+    }
 
     @Override
     public void onEnable() {
@@ -39,6 +52,8 @@ public final class Cerkour extends JavaPlugin {
             player.setGameMode(GameMode.ADVENTURE);
         }
         task = getServer().getScheduler().runTaskTimer(this, Board.getInstance(), 0, 20);
+        this.adventure = BukkitAudiences.create(this);
+        task1 = getServer().getScheduler().runTaskTimer(this, TablistAnimation.getInstance(), 0, 20);
     }
 
     @Override
@@ -46,6 +61,10 @@ public final class Cerkour extends JavaPlugin {
         super.onDisable();
         if (task != null) {
             task.cancel();
+        }
+        if(this.adventure != null) {
+            this.adventure.close();
+            this.adventure = null;
         }
     }
 
@@ -87,5 +106,9 @@ public final class Cerkour extends JavaPlugin {
 
     public ProfileManager getProfileManager() {
         return this.profileManager;
+    }
+
+    public BukkitAudiences getAdventure() {
+        return this.adventure;
     }
 }

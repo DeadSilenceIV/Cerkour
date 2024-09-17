@@ -1,5 +1,7 @@
 package me.cerdax.cerkour.utils;
 
+import me.cerdax.cerkour.Cerkour;
+import net.kyori.adventure.audience.Audience;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -7,10 +9,10 @@ import org.bukkit.entity.Player;
 public class SoundUtils {
     public static Sound determineSoundRankUp(int i) {
         if (i < 7) {
-            return Sound.CAT_MEOW;
+            return Sound.EXPLODE;
         }
         else if (i < 10) {
-            return Sound.CAT_PURREOW;
+            return Sound.WITHER_SPAWN;
         }
         else if (i < 13) {
             return Sound.WITHER_SPAWN;
