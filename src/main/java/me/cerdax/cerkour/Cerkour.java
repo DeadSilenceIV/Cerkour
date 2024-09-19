@@ -77,6 +77,8 @@ public final class Cerkour extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         getServer().getPluginManager().registerEvents(new WeatherChangeListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerBlockBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerBlockPlaceListener(), this);
     }
 
     public void registerCommands() {

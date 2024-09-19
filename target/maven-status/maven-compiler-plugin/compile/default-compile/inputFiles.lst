@@ -11,6 +11,8 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\files\CustomFile
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\AsyncPlayerChatListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\EntityDamageListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\InventoryClickListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerBlockBreakListener.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerBlockPlaceListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerDropItemListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerInteractListener.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\PlayerJoinListener.java

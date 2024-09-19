@@ -1,4 +1,5 @@
 me\cerdax\cerkour\commands\GGCommand.class
+me\cerdax\cerkour\listeners\PlayerBlockPlaceListener.class
 me\cerdax\cerkour\utils\LocationUtils.class
 me\cerdax\cerkour\commands\PracticeCommand.class
 me\cerdax\cerkour\utils\TitleUtils.class
@@ -15,6 +16,7 @@ me\cerdax\cerkour\listeners\PlayerInteractListener.class
 me\cerdax\cerkour\map\TickTimer$1.class
 me\cerdax\cerkour\utils\ActionBarUtils.class
 me\cerdax\cerkour\listeners\PlayerSprintListener.class
+me\cerdax\cerkour\listeners\PlayerBlockBreakListener.class
 me\cerdax\cerkour\utils\RankUtils.class
 me\cerdax\cerkour\map\Map.class
 me\cerdax\cerkour\listeners\PlayerDropItemListener.class
