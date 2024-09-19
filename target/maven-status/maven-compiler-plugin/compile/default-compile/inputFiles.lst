@@ -4,6 +4,7 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\JoinCom
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaderboardCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaveCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\MapCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\PracticeCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\ProfileCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\SpawnCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\files\CustomFiles.java
@@ -21,6 +22,7 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\CheckPoint.j
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\Map.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\MapManager.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\map\TickTimer.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\Practice.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\Profile.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\profile\ProfileManager.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\scoreboard\Board.java

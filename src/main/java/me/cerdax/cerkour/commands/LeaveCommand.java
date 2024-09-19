@@ -13,7 +13,7 @@ public class LeaveCommand implements CommandExecutor {
         if (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-            profile.leaveMap(player);
+            profile.leaveMap();
         }
         return true;
     }

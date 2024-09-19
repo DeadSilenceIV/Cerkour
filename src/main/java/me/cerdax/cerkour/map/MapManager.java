@@ -65,20 +65,25 @@ public class MapManager {
     }
 
     public String getLeaderboardString(Map map) {
-        String message = "";
+        String message = "§eMap §6" + map.getName() + " §eLeaderboard\n";
         if (map != null) {
             List<TickTimer> timers = new ArrayList<>(map.getTimers());
             timers.sort((t1, t2) -> Long.compare(t2.getBest(), t1.getBest()));
             StringBuilder result = new StringBuilder();
             Collections.reverse(timers);
+            int placement = 1;
             for (int i = 0; i < timers.size(); i++) {
-                if (i == 0) {
+                if (timers.get(i).getBest() == 0) {
+                    continue;
+                }
+                if (placement == 1) {
                     result.append(message);
                 }
-                if (i == 9) {
+                if (placement == 9) {
                     break;
                 }
-                result.append("§e").append(i + 1).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(timers.get(i).getPlayerName()).append("§e\n");
+                result.append("§e").append(placement).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(timers.get(i).getPlayerName()).append("§e\n");
+                placement++;
             }
             message = result.toString();
         }

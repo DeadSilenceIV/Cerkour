@@ -1,8 +1,11 @@
 me\cerdax\cerkour\commands\GGCommand.class
 me\cerdax\cerkour\utils\LocationUtils.class
+me\cerdax\cerkour\commands\PracticeCommand.class
 me\cerdax\cerkour\utils\TitleUtils.class
+me\cerdax\cerkour\profile\Practice.class
 me\cerdax\cerkour\commands\JoinCommand.class
 me\cerdax\cerkour\commands\SpawnCommand.class
+me\cerdax\cerkour\listeners\PlayerInteractListener$1.class
 me\cerdax\cerkour\files\CustomFiles.class
 me\cerdax\cerkour\utils\InventoryUtils.class
 me\cerdax\cerkour\profile\ProfileManager.class

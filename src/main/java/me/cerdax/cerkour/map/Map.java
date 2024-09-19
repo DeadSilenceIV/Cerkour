@@ -47,8 +47,8 @@ public class Map {
     }
 
     public void toggleTimer(boolean toggle, Player player) {
+        TickTimer playerTimer = getTimer(player);
         if (toggle) {
-            TickTimer playerTimer = getTimer(player);
             for (TickTimer timer : getTimers()) {
                 if (timer == playerTimer) {
                     timer.start(player);
@@ -56,9 +56,8 @@ public class Map {
             }
         } else {
             for (TickTimer timer : getTimers()) {
-                if (timer.getProfile(player) == Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId())) {
+                if (timer == playerTimer) {
                     timer.stop(player);
-                    serialize();
                 }
             }
         }
@@ -78,7 +77,6 @@ public class Map {
         }
         else {
             this.timers = new ArrayList<>();
-
         }
         TickTimer timer = new TickTimer(player.getName());
         this.timers.add(timer);

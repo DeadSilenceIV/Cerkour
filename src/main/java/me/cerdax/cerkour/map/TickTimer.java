@@ -10,6 +10,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 public class TickTimer {
 
     private long ticks;
+    private long stashedTicks;
     private long best;
     private boolean isRunning;
     private static final double TICKS_PER_SECOND = 20.0;
@@ -20,6 +21,7 @@ public class TickTimer {
         this.isRunning = false;
         this.playerName = playerName;
         this.best = 0;
+        this.stashedTicks = 0;
     }
 
     public long getTicks() {
@@ -38,6 +40,10 @@ public class TickTimer {
         return this.best;
     }
 
+    public long getStashedTicks() {
+        return this.stashedTicks;
+    }
+
     public void setBest(long ticks) {
         this.best = ticks;
     }
@@ -50,6 +56,14 @@ public class TickTimer {
         this.ticks = ticks;
     }
 
+    public void setStashedTicks() {
+        this.stashedTicks = getTicks();
+    }
+
+    public void clearStashedTicks() {
+        this.stashedTicks = 0;
+    }
+
     public void resetTimer() {
         this.ticks = 0;
     }
@@ -59,7 +73,6 @@ public class TickTimer {
             this.isRunning = true;
             new BukkitRunnable() {
                 @Override
-
                 public void run() {
                     if (isRunning) {
                         TickTimer.this.addTick();
@@ -75,7 +88,7 @@ public class TickTimer {
 
     public void stop(Player player) {
         if (isRunning) {
-            ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
+            ActionBarUtils.sendActionbar(player, " ");
             this.isRunning = false;
         }
     }
@@ -115,5 +128,4 @@ public class TickTimer {
     public boolean getIsRunning() {
         return isRunning;
     }
-
 }

@@ -14,12 +14,23 @@ public class ProfileCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if (args.length > 1) {
-            Player targetPlayer = Bukkit.getPlayer(args[1]);
-            Profile profile = Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId());
-            if (args[0].equalsIgnoreCase("setrankup")) {
-                profile.setRankUp(Integer.parseInt(args[2]));
-                player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §erank to: §6" + profile.getRankUp());
-                player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
+            Player targetPlayer = null;
+            targetPlayer = Bukkit.getPlayer(args[1]);
+            if (targetPlayer != null) {
+                Profile profile = Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId());
+                if (args[0].equalsIgnoreCase("setrankup")) {
+                    try {
+                        profile.setRankUp(Integer.parseInt(args[2]));
+                        player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §erank to: §6" + profile.getRankUp());
+                        targetPlayer.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId()).getRankUp()) + "§r " + targetPlayer.getDisplayName());
+                    }
+                    catch (NumberFormatException e) {
+                        player.sendMessage("§6§lCerkour§e> You may only use whole numbers!");
+                    }
+                }
+            }
+            else {
+                player.sendMessage("§6§lCerkour§e> Invalid player!");
             }
         }
         else {

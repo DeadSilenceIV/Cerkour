@@ -11,10 +11,7 @@ import me.cerdax.cerkour.utils.LocationUtils;
 import me.cerdax.cerkour.utils.TitleUtils;
 import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.event.ClickEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -29,12 +26,14 @@ public class Profile {
     private Map map;
     private int coins;
     private int rankUp;
+    private Practice practice;
 
     public Profile(UUID uuid) {
         this.uuid = uuid;
         this.map = null;
         this.coins = 0;
         this.rankUp = 1;
+        this.practice = new Practice();
         serialize();
     }
 
@@ -43,6 +42,7 @@ public class Profile {
         this.map = null;
         this.coins = coins;
         this.rankUp = rankUp;
+        this.practice = new Practice();
         serialize();
     }
 
@@ -58,12 +58,17 @@ public class Profile {
         return this.rankUp;
     }
 
+    public Practice getPractice() {
+        return this.practice;
+    }
+
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
         serialize();
     }
 
-    public void joinMap(Map map, Player player) {
+    public void joinMap(Map map) {
+        Player player = Bukkit.getPlayer(getUuid());
         if (map.getStartLocation() != null && map.getEndLocation() != null) {
             this.map = map;
             if ((map.getIsRankUp() && map.getRankUp() <= getRankUp()) || !map.getIsRankUp()) {
@@ -96,10 +101,14 @@ public class Profile {
         }
     }
 
-    public void leaveMap(Player player) {
-        if (this.map != null) {
-            if (map.getTimer(player).getIsRunning()) {
-                map.toggleTimer(false, player);
+    public void leaveMap() {
+        if (getMap() != null) {
+            Player player = Bukkit.getPlayer(getUuid());
+            if (getPractice().getIsEnabled()) {
+                leavePractice();
+            }
+            if (getMap().getTimer(player).getIsRunning()) {
+                getMap().toggleTimer(false, player);
             }
             this.map = null;
             player.teleport(LocationUtils.getSpawn());
@@ -107,6 +116,56 @@ public class Profile {
             InventoryUtils.lobbyInventory(player);
             ActionBarUtils.sendActionbar(player, " ");
         }
+    }
+
+    public void enterPractice(Map map) {
+        Player player = Bukkit.getPlayer(getUuid());
+        TickTimer timer = map.getTimer(player);
+        timer.setStashedTicks();
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        if (getMap() != map) {
+            leaveMap();
+            joinMap(map);
+        }
+        else if (getMap() == null) {
+            joinMap(map);
+        }
+        getMap().toggleTimer(false, player);
+        if (map.isOS()) {
+            InventoryUtils.practiceInventoryOS(player);
+        }
+        else {
+            InventoryUtils.practiceInventory(player);
+        }
+        getPractice().setIsEnabled(true);
+        getPractice().setStartPoint(map.getCheckPointLocation(player));
+        getPractice().setEndPoint(map.getEndLocation());
+    }
+
+    public void leavePractice() {
+        Player player = Bukkit.getPlayer(getUuid());
+        InventoryUtils.RemovePracticeInventory(player);
+        getPractice().setStartPoint(null);
+        getPractice().setEndPoint(null);
+        getPractice().setIsEnabled(false);
+        TickTimer timer = map.getTimer(player);
+        timer.setTicks(timer.getStashedTicks());
+        timer.clearStashedTicks();
+        map.serialize();
+        getMap().toggleTimer(true, player);
+
+        World world = getMap().getCheckPointLocation(player).getWorld();
+        double x = getMap().getCheckPointLocation(player).getX();
+        double y = getMap().getCheckPointLocation(player).getY();
+        double z = getMap().getCheckPointLocation(player).getZ();
+        float yaw = getMap().getCheckPointLocation(player).getYaw();
+        float pitch = player.getLocation().getPitch();
+        Location loc = new Location(world, x, y, z, yaw, pitch); //So the interact event doesn't double reg
+
+        player.teleport(loc);
+        player.setAllowFlight(false);
+        player.setFlying(false);
     }
 
     public int getCoins() {

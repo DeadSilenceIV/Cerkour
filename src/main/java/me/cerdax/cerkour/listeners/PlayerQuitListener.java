@@ -16,7 +16,7 @@ public class PlayerQuitListener implements Listener {
         e.setQuitMessage("§e[§c§l-§e] §6" + player.getName());
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         if (profile.getMap() != null) {
-            profile.leaveMap(player);
+            profile.leaveMap();
         }
     }
 }

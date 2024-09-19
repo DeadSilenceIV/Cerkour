@@ -13,8 +13,6 @@ import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.ScoreboardManager;
 
 public final class Cerkour extends JavaPlugin {
 
@@ -89,6 +87,7 @@ public final class Cerkour extends JavaPlugin {
         getCommand("profile").setExecutor(new ProfileCommand());
         getCommand("spawn").setExecutor(new SpawnCommand());
         getCommand("leaderboard").setExecutor(new LeaderboardCommand());
+        getCommand("practice").setExecutor(new PracticeCommand());
     }
 
     public void registerManagers() {

@@ -93,7 +93,7 @@ public class InventoryClickListener implements Listener {
                     }
                     if (map != null) {
                         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-                        profile.joinMap(map, player);
+                        profile.joinMap(map);
                     }
                     e.setCancelled(true);
                 }
@@ -109,7 +109,7 @@ public class InventoryClickListener implements Listener {
                     }
                     if (map != null) {
                         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-                        profile.joinMap(map, player);
+                        profile.joinMap(map);
                     }
                     e.setCancelled(true);
                 }
