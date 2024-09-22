@@ -77,6 +77,7 @@ public class Profile {
                 }
                 player.teleport(map.getCheckPointLocation(player));
                 player.setGameMode(GameMode.ADVENTURE);
+                player.setAllowFlight(false);
                 player.getInventory().clear();
                 InventoryUtils.gameInventory(player);
                 Audience audience = Cerkour.getInstance().getAdventure().player(player);
@@ -110,6 +111,7 @@ public class Profile {
             if (getMap().getTimer(player).getIsRunning()) {
                 getMap().toggleTimer(false, player);
             }
+            this.map.serialize();
             this.map = null;
             player.teleport(LocationUtils.getSpawn());
             player.getInventory().clear();

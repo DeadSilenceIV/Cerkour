@@ -26,15 +26,16 @@ public class PlayerSprintListener implements Listener {
                     if (map.getCheckPointLocation(player) == map.getStartLocation()) {
                         if (timer.getIsRunning()) {
                             timer.stop(player);
-                            timer.resetTimer();
                         }
-                        else {
-                            timer.resetTimer();
-                        }
+                        timer.resetTimer();
                     }
                 }
             }
+            else if (profile.getPractice().getIsEnabled() && profile.getPractice().getStartPoint() != null && !player.getAllowFlight()) {
+                if (!e.isSprinting() && map.isOS()) {
+                    player.teleport(profile.getPractice().getStartPoint());
+                }
+            }
         }
-
     }
 }

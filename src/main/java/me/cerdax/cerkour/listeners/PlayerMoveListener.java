@@ -28,6 +28,7 @@ public class PlayerMoveListener implements Listener {
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         Map map = profile.getMap();
         Practice practice = profile.getPractice();
+        boolean shouldNotTeleport = (e.getFrom().distance(e.getTo()) > 0.1D) && player.isSprinting();
 
         int x = to.getBlockX();
         int y = to.getBlockY();
@@ -85,15 +86,18 @@ public class PlayerMoveListener implements Listener {
                     map.getTimer(player).resetTimer();
                     profile.leaveMap();
                 }
-                if (e.getFrom().distance(e.getTo()) > 0.1D && map.isOS() && !player.isSprinting()) {
-                    if (map.getCheckPointLocation(player) == map.getStartLocation()) {
-                        player.teleport(map.getStartLocation());
-                        if (map.getTimer(player).getIsRunning()) {
-                            map.getTimer(player).stop(player);
-                            map.getTimer(player).resetTimer();
-                        }
-                        else {
-                            map.getTimer(player).resetTimer();
+                if (map.isOS()) {
+                    if (e.getFrom().distance(e.getTo()) > 0.1D) {
+                        if (!player.isSprinting()) {
+                            Location checkpoint = map.getCheckPointLocation(player);
+                            player.teleport(checkpoint);
+
+                            if (checkpoint.equals(map.getStartLocation())) {
+                                if (map.getTimer(player).getIsRunning()) {
+                                    map.getTimer(player).stop(player);
+                                }
+                                map.getTimer(player).resetTimer();
+                            }
                         }
                     }
                 }

@@ -25,5 +25,6 @@ public class PlayerJoinListener implements Listener {
                 player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
             }, 3L);
         e.setJoinMessage("§e[§a§l+§e] §6" + player.getName());
+        player.setAllowFlight(false);
     }
 }
