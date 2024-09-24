@@ -65,7 +65,19 @@ public class PlayerInteractListener implements Listener {
         else if (e.getItem().getType() == Material.QUARTZ) {
             if (e.getItem().getItemMeta().getDisplayName().equals("§6Reset")) {
                 Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
-                if (map.getCheckPointLocation(player) == map.getStartLocation()) {
+                if (!profile.getPractice().getIsEnabled()) {
+                    if (map.getCheckPointLocation(player) == map.getStartLocation()) {
+                        if (map.getTimer(player).getIsRunning()) {
+                            map.getTimer(player).stop(player);
+                            map.getTimer(player).resetTimer();
+                        }
+                        else {
+                            map.getTimer(player).resetTimer();
+                        }
+                    }
+                    player.teleport(profile.getMap().getCheckPointLocation(player));
+                }
+                else {
                     if (map.getTimer(player).getIsRunning()) {
                         map.getTimer(player).stop(player);
                         map.getTimer(player).resetTimer();
@@ -73,8 +85,8 @@ public class PlayerInteractListener implements Listener {
                     else {
                         map.getTimer(player).resetTimer();
                     }
+                    player.teleport(profile.getPractice().getStartPoint());
                 }
-                player.teleport(profile.getMap().getCheckPointLocation(player));
             }
         }
         else if (e.getItem().getType() == Material.REDSTONE) {

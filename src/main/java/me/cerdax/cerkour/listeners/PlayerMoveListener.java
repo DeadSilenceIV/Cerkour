@@ -12,6 +12,7 @@ import me.cerdax.cerkour.utils.SoundUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -28,7 +29,8 @@ public class PlayerMoveListener implements Listener {
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
         Map map = profile.getMap();
         Practice practice = profile.getPractice();
-        boolean shouldNotTeleport = (e.getFrom().distance(e.getTo()) > 0.1D) && player.isSprinting();
+        Location locUnder = player.getLocation();
+        locUnder.setY(locUnder.getY() - 1);
 
         int x = to.getBlockX();
         int y = to.getBlockY();
@@ -39,6 +41,11 @@ public class PlayerMoveListener implements Listener {
                 if (player.getLocation().getX() != map.getStartLocation().getX() || player.getLocation().getZ() != map.getStartLocation().getZ() || player.getLocation().getY() != map.getStartLocation().getY()) {
                     if (!map.getTimer(player).getIsRunning()) {
                         map.toggleTimer(true, player);
+                    }
+                }
+                for (Material db : map.getDeathBlocks()) {
+                    if (db.equals(locUnder.getBlock().getType())) {
+                        player.teleport(map.getCheckPointLocation(player));
                     }
                 }
                 for (CheckPoint c : map.getCheckpoints()) {
@@ -60,6 +67,16 @@ public class PlayerMoveListener implements Listener {
                         if (c.getPlayers().contains(player.getName())) {
                             c.removePlayer(player.getName());
                             map.serialize();
+                        }
+                    }
+                    if (map.isOS() && map.getTimer(player).getBest() == 0) {
+                        if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
+                            SoundUtils.playSoundRankUpAllPlayers(11);
+                            Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §a" + map.getName());
+                        }
+                        else if (map.getDifficulty() >= 9) {
+                            SoundUtils.playSoundRankUpAllPlayers(13);
+                            Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §c" + map.getName());
                         }
                     }
                     if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {

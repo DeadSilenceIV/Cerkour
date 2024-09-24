@@ -5,6 +5,7 @@ import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -121,6 +122,7 @@ public class MapManager {
                 String strEnd = mapSection.getString("end");
                 int rankUp = mapSection.getInt("rankup", 0);
                 int state = mapSection.getInt("state");
+                int difficulty = mapSection.getInt("difficulty");
 
                 Location spawnLoc = strSpawn != null ? LocationUtils.stringToLocation(strSpawn) : null;
                 Location endLoc = strEnd != null ? LocationUtils.stringToLocation(strEnd) : null;
@@ -128,6 +130,8 @@ public class MapManager {
                 List<CheckPoint> checkPoints = new ArrayList<>();
 
                 List<TickTimer> timers = new ArrayList<>();
+
+                List<Material> deathBlocks = new ArrayList<>();
 
                 ConfigurationSection checkPointSection = mapSection.getConfigurationSection("checkpoints");
 
@@ -167,7 +171,12 @@ public class MapManager {
                         }
                     }
                 }
-                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints, timers, state);
+
+                List<String> blockNames = mapSection.getStringList("deathBlocks");
+                for (String bName : blockNames) {
+                    deathBlocks.add(Material.getMaterial(bName));
+                }
+                Map map = new Map(mapUUID, name, spawnLoc, endLoc, rankUp, checkPoints, timers, state, difficulty, deathBlocks);
                 maps.add(map);
             }
         }

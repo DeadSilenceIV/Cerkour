@@ -5,11 +5,13 @@ import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -133,6 +135,28 @@ public class MapCommand implements CommandExecutor {
                         }
                         else {
                             player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("difficulty")) {
+                        if (map != null) {
+                            map.setDifficulty(Integer.parseInt(args[2]));
+                            player.sendMessage("§6§lCerkour§e> You set the difficulty to: §6" + map.getDifficulty());
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("adddb")) {
+                        if (map != null) {
+                            Location loc = player.getLocation();
+                            loc.setY(loc.getY() - 1);
+                            map.addDeathBlock(loc.getBlock().getType());
+                            player.sendMessage("§6§lCerkour§e> You added the block: §6" + loc.getBlock().getType());
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("removedb")) {
+                        if (map != null) {
+                            Location loc = player.getLocation();
+                            loc.setY(loc.getY() - 1);
+                            map.removeDeathBlocks(loc.getBlock().getType());
+                            player.sendMessage("§6§lCerkour§e> You removed the block: §6" + loc.getBlock().getType());
                         }
                     }
                 }

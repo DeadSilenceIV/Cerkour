@@ -9,6 +9,8 @@ import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 
@@ -22,6 +24,8 @@ public class Map {
     private List<CheckPoint> checkpoints;
     private List<TickTimer> timers;
     private int state; //1 = OS, 2 = Speedrun
+    private int difficulty;
+    private List<Material> deathBlocks;
 
     public Map(String name) {
         this.uuid = UUID.randomUUID();
@@ -32,10 +36,12 @@ public class Map {
         this.checkpoints = new ArrayList<>();
         this.timers = new ArrayList<>();
         this.state = 1;
+        this.difficulty = 1;
+        this.deathBlocks = new ArrayList<>();
         serialize();
     }
 
-    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers, int state) {
+    public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers, int state, int difficulty, List<Material> deathBlocks) {
         this.uuid = uuid;
         this.name = name;
         this.startLocation = spawnLocation;
@@ -44,6 +50,8 @@ public class Map {
         this.checkpoints = checkpoints;
         this.timers = timers;
         this.state = state;
+        this.difficulty = difficulty;
+        this.deathBlocks = deathBlocks;
     }
 
     public void toggleTimer(boolean toggle, Player player) {
@@ -61,6 +69,31 @@ public class Map {
                 }
             }
         }
+    }
+
+    public List<Material> getDeathBlocks() {
+        return this.deathBlocks;
+    }
+
+    public void addDeathBlock(Material block) {
+        if (!getDeathBlocks().contains(block)) {
+            this.deathBlocks.add(block);
+        }
+        serialize();
+    }
+
+    public void removeDeathBlocks(Material block) {
+        this.deathBlocks.removeIf(db -> db.equals(block));
+        serialize();
+    }
+
+    public int getDifficulty() {
+        return this.difficulty;
+    }
+
+    public void setDifficulty(int difficulty) {
+        this.difficulty = difficulty;
+        serialize();
     }
 
     public List<TickTimer> getTimers() {
@@ -198,6 +231,13 @@ public class Map {
                 config.set(checkpointPath + ".players", playerNames);
             }
         }
+        if (getDeathBlocks() != null && !getDeathBlocks().isEmpty()) {
+            List<String> blockNames = new ArrayList<>();
+            for (Material db : getDeathBlocks()) {
+                blockNames.add(db.name());
+            }
+            config.set("maps." + getMapUUID() + ".deathBlocks", blockNames);
+        }
         if (getTimers() != null && !getTimers().isEmpty()) {
             config.createSection("maps." + getMapUUID().toString() + ".timers");
             for (TickTimer timer : getTimers()) {
@@ -208,6 +248,7 @@ public class Map {
         }
         config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
         config.set("maps." + getMapUUID().toString() + ".state", getState());
+        config.set("maps." + getMapUUID().toString() + ".difficulty", getDifficulty());
         CustomFiles.saveCustomFile("maps");
     }
 

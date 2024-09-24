@@ -2,6 +2,8 @@ package me.cerdax.cerkour.utils;
 
 import org.bukkit.ChatColor;
 
+import javax.management.remote.rmi._RMIConnection_Stub;
+
 public class RankUtils {
     public static String getColoredRank(int i) {
         if (i == 1) {
@@ -47,5 +49,22 @@ public class RankUtils {
             return "§9§lXIV";
         }
         return null;
+    }
+    public static String getColoredDifficulty(int i) {
+        switch(i) {
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+                return "§8[§e" + i + "§8]";
+            case 7:
+            case 8:
+                return "§8[§a" + i + "§8]";
+            default:
+                return "§8[§c" + i + "§8]";
+
+        }
     }
 }
