@@ -38,6 +38,9 @@ public class PlayerSprintListener implements Listener {
             else if (profile.getPractice().getIsEnabled() && profile.getPractice().getStartPoint() != null && !player.getAllowFlight()) {
                 if (!e.isSprinting() && map.isOS()) {
                     player.teleport(profile.getPractice().getStartPoint());
+                    for (PotionEffect p : player.getActivePotionEffects()) {
+                        player.removePotionEffect(p.getType());
+                    }
                 }
             }
         }

@@ -54,16 +54,18 @@ public class PlayerMoveListener implements Listener {
                             for (PotionEffect p : player.getActivePotionEffects()) {
                                 player.removePotionEffect(p.getType());
                             }
-                            for (CheckPoint prevCP : map.getCheckpoints()) {
-                                prevCP.getPlayers().remove(player.getName());
-                            }
-                            for (PotionEffect p : player.getActivePotionEffects()) {
-                                player.removePotionEffect(p.getType());
-                                player.sendMessage("§6§lCerkour§e> You reached the checkpoint!");
+                            if (!practice.getIsEnabled()) {
+                                for (CheckPoint prevCP : map.getCheckpoints()) {
+                                    prevCP.getPlayers().remove(player.getName());
+                                }
                                 c.addPlayer(player.getName());
+                                player.sendMessage("§6§lCerkour§e> You reached the checkpoint!");
+                                map.serialize();
+                            }
+                            else {
+                                practice.setCheckPoint(c);
                             }
                         }
-                        map.serialize();
                     }
                     break;
                 }
@@ -161,10 +163,16 @@ public class PlayerMoveListener implements Listener {
                     if (e.getFrom().distance(e.getTo()) > 0.1D) {
                         if (!player.isSprinting() && practice.getStartPoint() != null && !player.getAllowFlight()) {
                             player.teleport(practice.getStartPoint());
+                            for (PotionEffect p : player.getActivePotionEffects()) {
+                                player.removePotionEffect(p.getType());
+                            }
                         }
                         if (player.getLocation().getBlockX() == practice.getEndPoint().getBlockX() && player.getLocation().getBlockZ() == practice.getEndPoint().getBlockZ() && (practice.getEndPoint().getBlockY() <= player.getLocation().getBlockY() && practice.getEndPoint().getBlockY() <= player.getLocation().getBlockY() + 1.25) && !player.getAllowFlight()) {
                             player.sendMessage("§6§lCerkour§e> You completed the section!");
                             player.teleport(practice.getStartPoint());
+                            for (PotionEffect p : player.getActivePotionEffects()) {
+                                player.removePotionEffect(p.getType());
+                            }
                         }
                     }
                 }

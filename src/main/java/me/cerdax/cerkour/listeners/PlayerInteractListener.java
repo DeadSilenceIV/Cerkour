@@ -140,7 +140,7 @@ public class PlayerInteractListener implements Listener {
                     player.setAllowFlight(false);
                     player.setFlying(false);
 
-                    World world = profile.getMap().getCheckPointLocation(player).getWorld();
+                    World world = profile.getMap().getStartLocation().getWorld();
                     double x = profile.getPractice().getStartPoint().getX();
                     double y = profile.getPractice().getStartPoint().getY();
                     double z = profile.getPractice().getStartPoint().getZ();

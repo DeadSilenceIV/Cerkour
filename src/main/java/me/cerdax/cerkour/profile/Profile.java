@@ -160,7 +160,9 @@ public class Profile {
         timer.clearStashedTicks();
         map.serialize();
         getMap().toggleTimer(true, player);
-
+        for (PotionEffect p : player.getActivePotionEffects()) {
+            player.removePotionEffect(p.getType());
+        }
         World world = getMap().getCheckPointLocation(player).getWorld();
         double x = getMap().getCheckPointLocation(player).getX();
         double y = getMap().getCheckPointLocation(player).getY();

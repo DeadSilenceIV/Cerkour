@@ -153,8 +153,6 @@ public class MapManager {
                                 potionType = PotionEffectType.getByName(potionName);
                             }
 
-                            System.out.println("Warning: Unknown potion type '" + potionName + potionAmplifier + "' for checkpoint '" + checkpointKey + "'");
-
                             Location fromLoc = strLocFrom != null ? LocationUtils.stringToLocation(strLocFrom) : null;
                             Location toLoc = strLocTo != null ? LocationUtils.stringToLocation(strLocTo) : null;
 
