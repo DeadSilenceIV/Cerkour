@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerToggleSprintEvent;
+import org.bukkit.potion.PotionEffect;
 
 public class PlayerSprintListener implements Listener {
 
@@ -24,6 +25,9 @@ public class PlayerSprintListener implements Listener {
                 if (!e.isSprinting() && map.isOS()) {
                     player.teleport(map.getCheckPointLocation(player));
                     if (map.getCheckPointLocation(player) == map.getStartLocation()) {
+                        for (PotionEffect p : player.getActivePotionEffects()) {
+                            player.removePotionEffect(p.getType());
+                        }
                         if (timer.getIsRunning()) {
                             timer.stop(player);
                         }

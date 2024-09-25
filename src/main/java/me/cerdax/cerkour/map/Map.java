@@ -227,6 +227,10 @@ public class Map {
                 if (c.getTo() != null) {
                     config.set(checkpointPath + ".to", LocationUtils.locationToString(c.getTo()));
                 }
+                config.set(checkpointPath + ".amplifier", c.getAmplifier());
+                if (c.getEffectType() != null) {
+                    config.set(checkpointPath + ".potion", c.getEffectType().getName());
+                }
                 List<String> playerNames = c.getPlayers();
                 config.set(checkpointPath + ".players", playerNames);
             }

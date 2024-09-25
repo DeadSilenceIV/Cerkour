@@ -3,13 +3,12 @@ package me.cerdax.cerkour.map;
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.io.IOException;
 import java.util.*;
@@ -124,6 +123,7 @@ public class MapManager {
                 int state = mapSection.getInt("state");
                 int difficulty = mapSection.getInt("difficulty");
 
+
                 Location spawnLoc = strSpawn != null ? LocationUtils.stringToLocation(strSpawn) : null;
                 Location endLoc = strEnd != null ? LocationUtils.stringToLocation(strEnd) : null;
 
@@ -144,13 +144,23 @@ public class MapManager {
                             boolean ld = checkpointSection.getBoolean("ld");
                             String strLocFrom = checkpointSection.getString("from");
                             String strLocTo = checkpointSection.getString("to");
+                            int potionAmplifier = checkpointSection.getInt("amplifier", 0);
+                            String potionName = checkpointSection.getString("potion", "defaultPotion");
+
+                            PotionEffectType potionType = null;
+
+                            if (potionName != null && !potionName.isEmpty()) {
+                                potionType = PotionEffectType.getByName(potionName);
+                            }
+
+                            System.out.println("Warning: Unknown potion type '" + potionName + potionAmplifier + "' for checkpoint '" + checkpointKey + "'");
 
                             Location fromLoc = strLocFrom != null ? LocationUtils.stringToLocation(strLocFrom) : null;
                             Location toLoc = strLocTo != null ? LocationUtils.stringToLocation(strLocTo) : null;
 
                             List<String> players = checkpointSection.getStringList("players");
 
-                            checkPoints.add(new CheckPoint(index, ld, fromLoc, toLoc, players));
+                            checkPoints.add(new CheckPoint(index, ld, fromLoc, toLoc, players, potionType, potionAmplifier));
                         }
                     }
                 }

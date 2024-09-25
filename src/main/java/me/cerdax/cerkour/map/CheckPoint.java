@@ -2,7 +2,7 @@ package me.cerdax.cerkour.map;
 
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,8 @@ public class CheckPoint {
     private Location from;
     private Location to;
     private List<String> players;
+    private PotionEffectType effect;
+    private int amplifier;
 
     public CheckPoint(int index) {
         this.index = index;
@@ -21,14 +23,31 @@ public class CheckPoint {
         this.from = null;
         this.to = null;
         this.players = new ArrayList<>();
+        this.effect = null;
+        this.amplifier = 0;
     }
 
-    public CheckPoint(int index, boolean ld, Location from, Location to, List<String> players) {
+    public CheckPoint(int index, boolean ld, Location from, Location to, List<String> players, PotionEffectType effect, int amplifier) {
         this.index = index;
         this.ld = ld;
         this.from = from;
         this.to = to;
         this.players = players;
+        this.effect = effect;
+        this.amplifier = amplifier;
+    }
+
+    public int getAmplifier() {
+        return this.amplifier;
+    }
+
+    public PotionEffectType getEffectType() {
+        return this.effect;
+    }
+
+    public void setEffect(PotionEffectType effect, int amplifier) {
+        this.effect = effect;
+        this.amplifier = amplifier;
     }
 
     public int getIndex() {

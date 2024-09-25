@@ -16,6 +16,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
@@ -113,6 +114,9 @@ public class Profile {
             }
             this.map.serialize();
             this.map = null;
+            for (PotionEffect p : player.getActivePotionEffects()) {
+                player.removePotionEffect(p.getType());
+            }
             player.teleport(LocationUtils.getSpawn());
             player.getInventory().clear();
             InventoryUtils.lobbyInventory(player);

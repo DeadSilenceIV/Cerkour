@@ -17,7 +17,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
+import javax.management.StringValueExp;
 import java.util.HashMap;
 
 public class PlayerMoveListener implements Listener {
@@ -37,6 +40,34 @@ public class PlayerMoveListener implements Listener {
         int z = to.getBlockZ();
 
         if (map != null) {
+            for (CheckPoint c : map.getCheckpoints()) {
+                if (c.getFrom().getBlockX() == x && c.getFrom().getBlockY() == y && c.getFrom().getBlockZ() == z) {
+                    if (!c.getPlayers().contains(player.getName())) {
+                        if (c.getEffectType() != null) {
+                            for (PotionEffect p : player.getActivePotionEffects()) {
+                                player.removePotionEffect(p.getType());
+                            }
+                            player.addPotionEffect(new PotionEffect(c.getEffectType(), Integer.MAX_VALUE, c.getAmplifier() - 1));
+                            //player.sendMessage("§6§lCerkour§e> You have been given: §6" + c.getEffectType().getName() + " " + c.getAmplifier());
+                        }
+                        else {
+                            for (PotionEffect p : player.getActivePotionEffects()) {
+                                player.removePotionEffect(p.getType());
+                            }
+                            for (CheckPoint prevCP : map.getCheckpoints()) {
+                                prevCP.getPlayers().remove(player.getName());
+                            }
+                            for (PotionEffect p : player.getActivePotionEffects()) {
+                                player.removePotionEffect(p.getType());
+                                player.sendMessage("§6§lCerkour§e> You reached the checkpoint!");
+                                c.addPlayer(player.getName());
+                            }
+                        }
+                        map.serialize();
+                    }
+                    break;
+                }
+            }
             if (!profile.getPractice().getIsEnabled()) {
                 if (player.getLocation().getX() != map.getStartLocation().getX() || player.getLocation().getZ() != map.getStartLocation().getZ() || player.getLocation().getY() != map.getStartLocation().getY()) {
                     if (!map.getTimer(player).getIsRunning()) {
@@ -46,19 +77,6 @@ public class PlayerMoveListener implements Listener {
                 for (Material db : map.getDeathBlocks()) {
                     if (db.equals(locUnder.getBlock().getType())) {
                         player.teleport(map.getCheckPointLocation(player));
-                    }
-                }
-                for (CheckPoint c : map.getCheckpoints()) {
-                    if (c.getFrom().getBlockX() == x && c.getFrom().getBlockY() == y && c.getFrom().getBlockZ() == z) {
-                        if (!c.getPlayers().contains(player.getName())) {
-                            for (CheckPoint prevCP : map.getCheckpoints()) {
-                                prevCP.getPlayers().remove(player.getName());
-                            }
-                            c.addPlayer(player.getName());
-                            map.serialize();
-                            player.sendMessage("§6§lCerkour§e> You reached checkpoint: §6" + c.getIndex());
-                        }
-                        break;
                     }
                 }
                 if (map.getEndLocation().getBlockZ() == z && map.getEndLocation().getBlockX() == x && (map.getEndLocation().getBlockY() <= y && map.getEndLocation().getBlockY() <= y + 1.25)) {
@@ -108,8 +126,10 @@ public class PlayerMoveListener implements Listener {
                         if (!player.isSprinting()) {
                             Location checkpoint = map.getCheckPointLocation(player);
                             player.teleport(checkpoint);
-
                             if (checkpoint.equals(map.getStartLocation())) {
+                                for (PotionEffect p : player.getActivePotionEffects()) {
+                                    player.removePotionEffect(p.getType());
+                                }
                                 if (map.getTimer(player).getIsRunning()) {
                                     map.getTimer(player).stop(player);
                                 }

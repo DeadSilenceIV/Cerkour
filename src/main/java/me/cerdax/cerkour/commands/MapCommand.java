@@ -12,6 +12,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,6 +137,13 @@ public class MapCommand implements CommandExecutor {
                         }
                         else {
                             player.sendMessage("§6§lCerkour§e> Map not found!");
+                        }
+                    }
+                    else if (args[0].equalsIgnoreCase("setcpeffect")) {
+                        if (map != null) {
+                            map.getCheckPoint(Integer.parseInt(args[2])).setEffect(PotionEffectType.getByName(args[3]), Integer.parseInt(args[4]));
+                            player.sendMessage("§6§lCerkour§e> You set the checkpoint to the effect: §6" + map.getCheckPoint(Integer.parseInt(args[2])).getEffectType().getName() + " " + map.getCheckPoint(Integer.parseInt(args[2])).getAmplifier());
+                            map.serialize();
                         }
                     }
                     else if (args[0].equalsIgnoreCase("difficulty")) {
