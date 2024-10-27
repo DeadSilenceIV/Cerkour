@@ -7,6 +7,7 @@ import me.cerdax.cerkour.map.TickTimer;
 import me.cerdax.cerkour.profile.Practice;
 import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
+import me.cerdax.cerkour.utils.PointsUtil;
 import me.cerdax.cerkour.utils.RankUtils;
 import me.cerdax.cerkour.utils.SoundUtils;
 import org.bukkit.Bukkit;
@@ -90,19 +91,25 @@ public class PlayerMoveListener implements Listener {
                         }
                     }
                     if (map.isOS() && map.getTimer(player).getBest() == 0) {
-                        if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
-                            SoundUtils.playSoundRankUpAllPlayers(11);
-                            Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §a" + map.getName());
+                        if (!map.getIsRankUp()) {
+                            if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
+                                profile.leaveMap();
+                                SoundUtils.playSoundRankUpAllPlayers(11);
+                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                            }
+                            else if (map.getDifficulty() >= 9) {
+                                profile.leaveMap();
+                                SoundUtils.playSoundRankUpAllPlayers(13);
+                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                            }
                         }
-                        else if (map.getDifficulty() >= 9) {
-                            SoundUtils.playSoundRankUpAllPlayers(13);
-                            Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §c" + map.getName());
-                        }
+                        profile.addPoints(PointsUtil.getPointsForDifficulty(map.getDifficulty()));
                     }
                     if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
                         profile.setRankUp(profile.getRankUp() + 1);
                         player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                         Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
+                        profile.leaveMap();
                         SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
                         player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
                     }
@@ -119,9 +126,10 @@ public class PlayerMoveListener implements Listener {
                     else {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                     }
-
                     map.getTimer(player).resetTimer();
-                    profile.leaveMap();
+                    if (profile.getMap() != null) {
+                        profile.leaveMap();
+                    }
                 }
                 if (map.isOS()) {
                     if (e.getFrom().distance(e.getTo()) > 0.1D) {

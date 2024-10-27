@@ -6,6 +6,12 @@ commands:
   gg:
     description: A simple GG command
     usage: /<command>
+  gl:
+    description: A simple GL command
+    usage: /<command>
+  rip:
+    description: A simple RIP command
+    usage: /<command>
   map:
     description: Map handling
   join:

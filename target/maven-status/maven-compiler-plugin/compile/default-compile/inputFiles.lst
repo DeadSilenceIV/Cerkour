@@ -1,11 +1,13 @@
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\Cerkour.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\GGCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\GLCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\JoinCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaderboardCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\LeaveCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\MapCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\PracticeCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\ProfileCommand.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\RIPCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\commands\SpawnCommand.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\files\CustomFiles.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\listeners\AsyncPlayerChatListener.java
@@ -32,6 +34,7 @@ C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\tablist\TablistA
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\ActionBarUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\InventoryUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\LocationUtils.java
+C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\PointsUtil.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\RankUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\SoundUtils.java
 C:\Users\Adam\Documents\Cerkour\src\main\java\me\cerdax\cerkour\utils\TitleUtils.java

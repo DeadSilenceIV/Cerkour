@@ -15,7 +15,7 @@ public class AsyncPlayerChatListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent e) {
         Player player = e.getPlayer();
         Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-        Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " §7" + player.getDisplayName() + "§8: §r" + e.getMessage());
+        Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " §7" + player.getDisplayName() + " §8[§r" + profile.getPoints() + "§8]" + "§7: §r" + e.getMessage());
         e.setCancelled(true);
     }
 }

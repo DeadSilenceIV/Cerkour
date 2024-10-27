@@ -82,7 +82,7 @@ public class TickTimer {
                         cancel();
                     }
                 }
-            }.runTaskTimer((Plugin) Cerkour.getInstance(), 0L, 1L);
+            }.runTaskTimer(Cerkour.getInstance(), 0L, 1L);
         }
     }
 

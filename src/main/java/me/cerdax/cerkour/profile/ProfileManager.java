@@ -60,7 +60,8 @@ public class ProfileManager {
                 UUID uuid = UUID.fromString(uuidStr);
                 int coins = profileSection.getInt("coins", 0);
                 int rankUp = profileSection.getInt("rankup", 1);
-                Profile profile = new Profile(uuid, coins, rankUp);
+                int points = profileSection.getInt("points", 0);
+                Profile profile = new Profile(uuid, coins, rankUp, points);
                 profiles.add(profile);
             }
         }

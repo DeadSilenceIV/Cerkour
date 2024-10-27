@@ -10,13 +10,13 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class GGCommand implements CommandExecutor {
+public class GLCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender instanceof Player) {
+        if  (sender instanceof Player) {
             Player player = (Player) sender;
             Profile profile = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-            Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " §7" + player.getDisplayName() + " §8[§r" + profile.getPoints() + "§8]" +"§7: §r" + String.format("%s%sG%s%sG", ChatColor.GOLD, ChatColor.BOLD, ChatColor.YELLOW, ChatColor.BOLD));
+            Bukkit.broadcastMessage(RankUtils.getColoredRank(profile.getRankUp()) + " §7" + player.getDisplayName() + " §8[§r" + profile.getPoints() + "§8]" +"§7: §r" + String.format("%s%sG%s%sL", ChatColor.DARK_GREEN, ChatColor.BOLD, ChatColor.GREEN, ChatColor.BOLD));
         }
         return true;
     }

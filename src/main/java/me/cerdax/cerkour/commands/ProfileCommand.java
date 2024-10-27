@@ -28,13 +28,22 @@ public class ProfileCommand implements CommandExecutor {
                         player.sendMessage("§6§lCerkour§e> You may only use whole numbers!");
                     }
                 }
+                else if (args[0].equalsIgnoreCase("setpoints")) {
+                    try {
+                        profile.setPoints(Integer.parseInt(args[2]));
+                        player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §epoints to: §6" + profile.getPoints());
+                    }
+                    catch (NumberFormatException e) {
+                        player.sendMessage("§6§lCerkour§e> You may only use whole numbers!");
+                    }
+                }
             }
             else {
                 player.sendMessage("§6§lCerkour§e> Invalid player!");
             }
         }
         else {
-            player.sendMessage("§6§lCerkour§e> Profile Subcommands: \n§e- §6§lsetrankup §e(player) (rank)"); //perhaps make this display all subcommands instead
+            player.sendMessage("§6§lCerkour§e> Profile Subcommands: \n§e- §6§lsetrankup §e(player) (rank) \n§e- §6§lsetpoints §e(player) (points)");
         }
         return true;
     }

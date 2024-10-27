@@ -84,6 +84,8 @@ public final class Cerkour extends JavaPlugin {
     public void registerCommands() {
         getCommand("map").setExecutor(new MapCommand());
         getCommand("gg").setExecutor(new GGCommand());
+        getCommand("gl").setExecutor(new GLCommand());
+        getCommand("rip").setExecutor(new RIPCommand());
         getCommand("join").setExecutor(new JoinCommand());
         getCommand("leave").setExecutor(new LeaveCommand());
         getCommand("profile").setExecutor(new ProfileCommand());

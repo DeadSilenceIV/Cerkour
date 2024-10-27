@@ -19,9 +19,11 @@ me\cerdax\cerkour\listeners\PlayerSprintListener.class
 me\cerdax\cerkour\listeners\PlayerBlockBreakListener.class
 me\cerdax\cerkour\utils\RankUtils.class
 me\cerdax\cerkour\map\Map.class
+me\cerdax\cerkour\commands\GLCommand.class
 me\cerdax\cerkour\listeners\PlayerDropItemListener.class
 me\cerdax\cerkour\listeners\AsyncPlayerChatListener.class
 me\cerdax\cerkour\listeners\WeatherChangeListener.class
+me\cerdax\cerkour\utils\PointsUtil.class
 me\cerdax\cerkour\utils\SoundUtils.class
 me\cerdax\cerkour\map\CheckPoint.class
 me\cerdax\cerkour\commands\MapCommand.class
@@ -30,6 +32,7 @@ me\cerdax\cerkour\commands\LeaderboardCommand.class
 me\cerdax\cerkour\listeners\PlayerQuitListener.class
 me\cerdax\cerkour\scoreboard\Board.class
 me\cerdax\cerkour\map\MapManager.class
+me\cerdax\cerkour\commands\RIPCommand.class
 me\cerdax\cerkour\Cerkour.class
 me\cerdax\cerkour\commands\ProfileCommand.class
 me\cerdax\cerkour\commands\LeaveCommand.class

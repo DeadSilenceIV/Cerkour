@@ -184,7 +184,7 @@ public class MapCommand implements CommandExecutor {
                 }
             }
             else {
-                player.sendMessage("§6§lCerkour§e> Map Subcommands: \n§e- §6§lcreate §e(map name) \n§e- §6§lsetstart §e(map name) \n§e- §6§lsetend §e(map name) \n§e- §6§lrankup §e(map name) (rank) \n§e- §6§lremove §e(map name) \n§e- §6§laddcp §e(map name) (checkpoint number) \n§e- §6§lsetcpfrom §e(map name) (checkpoint number) \n§e- §6§lsetcpto §e(map name) (checkpoint number) \n§e- §6§lsetcpld §e(map name) (checkpoint number) \n§e- §6§llist \n§e- §6§lsetspawn §e// sets lobby spawn, dont use this for map creation");
+                player.sendMessage("§6§lCerkour§e> Map Subcommands: \n§e- §6§lcreate §e(map name) \n§e- §6§lsetstart §e(map name) \n§e- §6§lsetend §e(map name) \n§e- §6§lrankup §e(map name) (rank) \n§e- §6§ldifficulty §e(map name) (difficulty) \n§e- §6§lremove §e(map name) \n§e- §6§laddcp §e(map name) (checkpoint number) \n§e- §6§lsetcpfrom §e(map name) (checkpoint number) \n§e- §6§lsetcpto §e(map name) (checkpoint number) \n§e- §6§lsetcpld §e(map name) (checkpoint number) \n§e- §6§lsetcpeffect §e(map name) (checkpoint number) \n§e- §6§ladddb §e(map name) \n§e- §6§lremovedb §e(map name) \n§e- §6§llist \n§e- §6§lsetspawn §e// sets lobby spawn, dont use this for map creation");
             }
         }
         return true;

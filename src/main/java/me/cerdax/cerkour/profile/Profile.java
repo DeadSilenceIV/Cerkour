@@ -28,6 +28,7 @@ public class Profile {
     private int coins;
     private int rankUp;
     private Practice practice;
+    private int points;
 
     public Profile(UUID uuid) {
         this.uuid = uuid;
@@ -35,16 +36,31 @@ public class Profile {
         this.coins = 0;
         this.rankUp = 1;
         this.practice = new Practice();
+        this.points = 0;
         serialize();
     }
 
-    public Profile(UUID uuid, int coins, int rankUp) {
+    public Profile(UUID uuid, int coins, int rankUp, int points) {
         this.uuid = uuid;
         this.map = null;
         this.coins = coins;
         this.rankUp = rankUp;
         this.practice = new Practice();
+        this.points = points;
+    }
+
+    public void addPoints(int amount) {
+        this.points += amount;
         serialize();
+    }
+
+    public void setPoints(int amount) {
+        this.points = amount;
+        serialize();
+    }
+
+    public int getPoints() {
+        return this.points;
     }
 
     public UUID getUuid() {
@@ -183,6 +199,7 @@ public class Profile {
     public void serialize() {
         CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
         CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".points", getPoints());
         CustomFiles.saveCustomFile("profiles");
     }
 }
