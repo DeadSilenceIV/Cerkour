@@ -43,7 +43,7 @@ public class PlayerMoveListener implements Listener {
         if (map != null) {
             for (CheckPoint c : map.getCheckpoints()) {
                 if (c.getFrom().getBlockX() == x && c.getFrom().getBlockY() == y && c.getFrom().getBlockZ() == z) {
-                    if (!c.getPlayers().contains(player.getName())) {
+                    if (!c.getPlayerUUIDs().contains(player.getUniqueId())) {
                         if (c.getEffectType() != null) {
                             for (PotionEffect p : player.getActivePotionEffects()) {
                                 player.removePotionEffect(p.getType());
@@ -57,9 +57,9 @@ public class PlayerMoveListener implements Listener {
                             }
                             if (!practice.getIsEnabled()) {
                                 for (CheckPoint prevCP : map.getCheckpoints()) {
-                                    prevCP.getPlayers().remove(player.getName());
+                                    prevCP.getPlayerUUIDs().remove(player.getUniqueId());
                                 }
-                                c.addPlayer(player.getName());
+                                c.addPlayer(player.getUniqueId());
                                 player.sendMessage("§6§lCerkour§e> You reached the checkpoint!");
                                 map.serialize();
                             }
@@ -85,33 +85,10 @@ public class PlayerMoveListener implements Listener {
                 if (map.getEndLocation().getBlockZ() == z && map.getEndLocation().getBlockX() == x && (map.getEndLocation().getBlockY() <= y && map.getEndLocation().getBlockY() <= y + 1.25)) {
                     map.toggleTimer(false, player);
                     for (CheckPoint c : map.getCheckpoints()) {
-                        if (c.getPlayers().contains(player.getName())) {
-                            c.removePlayer(player.getName());
+                        if (c.getPlayerUUIDs().contains(player.getUniqueId())) {
+                            c.removePlayer(player.getUniqueId());
                             map.serialize();
                         }
-                    }
-                    if (map.isOS() && map.getTimer(player).getBest() == 0) {
-                        if (!map.getIsRankUp()) {
-                            if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
-                                profile.leaveMap();
-                                SoundUtils.playSoundRankUpAllPlayers(11);
-                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
-                            }
-                            else if (map.getDifficulty() >= 9) {
-                                profile.leaveMap();
-                                SoundUtils.playSoundRankUpAllPlayers(13);
-                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
-                            }
-                        }
-                        profile.addPoints(PointsUtil.getPointsForDifficulty(map.getDifficulty()));
-                    }
-                    if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
-                        profile.setRankUp(profile.getRankUp() + 1);
-                        player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
-                        Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
-                        profile.leaveMap();
-                        SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
-                        player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
                     }
                     if (map.getTimer(player).getBest() > map.getTimer(player).getTicks()) {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()) + "§e and got a new §6§lPERSONAL BEST §e(-§6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getBest() - map.getTimer(player).getTicks()) + "§e)");
@@ -120,11 +97,34 @@ public class PlayerMoveListener implements Listener {
                     }
                     else if (map.getTimer(player).getBest() == 0) {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
-                        map.getTimer(player).setBest(map.getTimer(player).getTicks());
-                        map.serialize();
                     }
                     else {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                    }
+                    if (map.isOS() && map.getTimer(player).getBest() == 0) {
+                        if (!map.getIsRankUp()) {
+                            if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
+                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                                profile.leaveMap();
+                                SoundUtils.playSoundRankUpAllPlayers(11);
+                            }
+                            else if (map.getDifficulty() >= 9) {;
+                                Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                                profile.leaveMap();
+                                SoundUtils.playSoundRankUpAllPlayers(13);
+                            }
+                        }
+                        map.getTimer(player).setBest(map.getTimer(player).getTicks());
+                        profile.addPoints(PointsUtil.getPointsForDifficulty(map.getDifficulty()));
+                        map.serialize();
+                    }
+                    if (map.getIsRankUp() && profile.getRankUp() == map.getRankUp()) {
+                        profile.setRankUp(profile.getRankUp() + 1);
+                        player.sendMessage("§6§lCerkour§e> You have ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                        Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas ranked up to " + RankUtils.getColoredRank(profile.getRankUp()) + "§e!");
+                        profile.leaveMap();
+                        SoundUtils.playSoundRankUpAllPlayers(profile.getRankUp());
+                        player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
                     }
                     map.getTimer(player).resetTimer();
                     if (profile.getMap() != null) {

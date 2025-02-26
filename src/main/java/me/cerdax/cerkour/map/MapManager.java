@@ -65,27 +65,29 @@ public class MapManager {
     }
 
     public String getLeaderboardString(Map map) {
-        String message = "§eMap §6" + map.getName() + " §eLeaderboard\n";
+        String message = "§eMap §6" + map.getName() + " §eLeaderboard:\n";
         if (map != null) {
             List<TickTimer> timers = new ArrayList<>(map.getTimers());
             timers.sort((t1, t2) -> Long.compare(t2.getBest(), t1.getBest()));
             StringBuilder result = new StringBuilder();
             Collections.reverse(timers);
             int placement = 1;
-            for (int i = 0; i < timers.size(); i++) {
-                if (timers.get(i).getBest() == 0) {
-                    continue;
+            if (!timers.isEmpty()) {
+                for (int i = 0; i < timers.size(); i++) {
+                    if (timers.get(i).getBest() == 0) {
+                        continue;
+                    }
+                    if (placement == 1) {
+                        result.append(message);
+                    }
+                    if (placement == 11) {
+                        break;
+                    }
+                    result.append("§e").append(placement).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(Bukkit.getOfflinePlayer(timers.get(i).getPlayerUUID()).getName()).append("§e\n");
+                    placement++;
                 }
-                if (placement == 1) {
-                    result.append(message);
-                }
-                if (placement == 9) {
-                    break;
-                }
-                result.append("§e").append(placement).append(". ").append("§6").append(timers.get(i).getTimeFromTicks(timers.get(i).getBest())).append("§e - ").append("§6").append(timers.get(i).getPlayerName()).append("§e\n");
-                placement++;
+                message = result.toString();
             }
-            message = result.toString();
         }
         return message;
     }
@@ -157,8 +159,12 @@ public class MapManager {
                             Location toLoc = strLocTo != null ? LocationUtils.stringToLocation(strLocTo) : null;
 
                             List<String> players = checkpointSection.getStringList("players");
+                            List<UUID> playerUUIDs = new ArrayList<>();
+                            for (String p : players) {
+                                playerUUIDs.add(UUID.fromString(p));
 
-                            checkPoints.add(new CheckPoint(index, ld, fromLoc, toLoc, players, potionType, potionAmplifier));
+                            }
+                            checkPoints.add(new CheckPoint(index, ld, fromLoc, toLoc, playerUUIDs, potionType, potionAmplifier));
                         }
                     }
                 }
@@ -172,7 +178,7 @@ public class MapManager {
                         if (timerSection != null) {
                             long ticks = timerSection.getLong("ticks");
                             long best = timerSection.getLong("best");
-                            TickTimer playerTimer = new TickTimer(timerKey);
+                            TickTimer playerTimer = new TickTimer(UUID.fromString(timerKey));
                             playerTimer.setTicks(ticks);
                             playerTimer.setBest(best);
                             timers.add(playerTimer);

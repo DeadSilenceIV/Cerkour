@@ -6,6 +6,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class CheckPoint {
 
@@ -13,7 +14,7 @@ public class CheckPoint {
     private boolean ld;
     private Location from;
     private Location to;
-    private List<String> players;
+    private List<UUID> playerUUIDs;
     private PotionEffectType effect;
     private int amplifier;
 
@@ -22,17 +23,17 @@ public class CheckPoint {
         this.ld = false;
         this.from = null;
         this.to = null;
-        this.players = new ArrayList<>();
+        this.playerUUIDs = new ArrayList<>();
         this.effect = null;
         this.amplifier = 0;
     }
 
-    public CheckPoint(int index, boolean ld, Location from, Location to, List<String> players, PotionEffectType effect, int amplifier) {
+    public CheckPoint(int index, boolean ld, Location from, Location to, List<UUID> players, PotionEffectType effect, int amplifier) {
         this.index = index;
         this.ld = ld;
         this.from = from;
         this.to = to;
-        this.players = players;
+        this.playerUUIDs = players;
         this.effect = effect;
         this.amplifier = amplifier;
     }
@@ -76,8 +77,8 @@ public class CheckPoint {
         return null;
     }
 
-    public List<String> getPlayers() {
-        return this.players;
+    public List<UUID> getPlayerUUIDs() {
+        return this.playerUUIDs;
     }
 
     public void setLd(boolean ld) {
@@ -92,9 +93,9 @@ public class CheckPoint {
         this.to = to;
     }
 
-    public void addPlayer(String player) {
-        this.players.add(player);
+    public void addPlayer(UUID uuid) {
+        this.playerUUIDs.add(uuid);
     }
 
-    public void removePlayer(String player) { this.players.remove(player); }
+    public void removePlayer(UUID uuid) { this.playerUUIDs.remove(uuid); }
 }

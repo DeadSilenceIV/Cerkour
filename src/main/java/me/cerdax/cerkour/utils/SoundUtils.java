@@ -14,9 +14,6 @@ public class SoundUtils {
         else if (i < 10) {
             return Sound.WITHER_SPAWN;
         }
-        else if (i < 13) {
-            return Sound.WITHER_SPAWN;
-        }
         else {
             return Sound.ENDERDRAGON_DEATH;
         }

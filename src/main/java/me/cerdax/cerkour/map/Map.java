@@ -103,7 +103,7 @@ public class Map {
     public TickTimer getTimer(Player player) {
         if (this.timers != null) {
             for (TickTimer timer : getTimers()) {
-                if (timer.getPlayerName().equalsIgnoreCase(player.getName())) {
+                if (timer.getPlayerUUID().toString().equalsIgnoreCase(player.getUniqueId().toString())) {
                     return timer;
                 }
             }
@@ -111,7 +111,7 @@ public class Map {
         else {
             this.timers = new ArrayList<>();
         }
-        TickTimer timer = new TickTimer(player.getName());
+        TickTimer timer = new TickTimer(player.getUniqueId());
         this.timers.add(timer);
         return timer;
     }
@@ -191,7 +191,7 @@ public class Map {
 
     public Location getCheckPointLocation(Player player) {
         for (CheckPoint c : getCheckpoints()) {
-            if (c.getPlayers().contains(player.getName())) {
+            if (c.getPlayerUUIDs().contains(player.getUniqueId())) {
                 return c.getTo();
             }
         }
@@ -231,8 +231,12 @@ public class Map {
                 if (c.getEffectType() != null) {
                     config.set(checkpointPath + ".potion", c.getEffectType().getName());
                 }
-                List<String> playerNames = c.getPlayers();
-                config.set(checkpointPath + ".players", playerNames);
+                List<UUID> playerUUIDs = c.getPlayerUUIDs();
+                List<String> playerUUIDString = new ArrayList<>();
+                for (UUID uuid : playerUUIDs) {
+                    playerUUIDString.add(uuid.toString());
+                }
+                config.set(checkpointPath + ".players", playerUUIDString);
             }
         }
         if (getDeathBlocks() != null && !getDeathBlocks().isEmpty()) {
@@ -245,7 +249,7 @@ public class Map {
         if (getTimers() != null && !getTimers().isEmpty()) {
             config.createSection("maps." + getMapUUID().toString() + ".timers");
             for (TickTimer timer : getTimers()) {
-                String timerPath = "maps." + getMapUUID().toString() + ".timers." + timer.getPlayerName();
+                String timerPath = "maps." + getMapUUID().toString() + ".timers." + timer.getPlayerUUID().toString();
                 config.set(timerPath + ".ticks", timer.getTicks());
                 config.set(timerPath + ".best", timer.getBest());
             }

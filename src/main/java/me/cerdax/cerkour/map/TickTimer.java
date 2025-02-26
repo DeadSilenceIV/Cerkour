@@ -3,9 +3,12 @@ package me.cerdax.cerkour.map;
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.UUID;
 
 public class TickTimer {
 
@@ -14,12 +17,12 @@ public class TickTimer {
     private long best;
     private boolean isRunning;
     private static final double TICKS_PER_SECOND = 20.0;
-    private String playerName;
+    private UUID playerUUID;
 
-    public TickTimer(String playerName) {
+    public TickTimer(UUID playerUUID) {
         this.ticks = 0;
         this.isRunning = false;
-        this.playerName = playerName;
+        this.playerUUID = playerUUID;
         this.best = 0;
         this.stashedTicks = 0;
     }
@@ -28,8 +31,12 @@ public class TickTimer {
         return this.ticks;
     }
 
+    public UUID getPlayerUUID() {
+        return this.playerUUID;
+    }
+
     public String getPlayerName() {
-        return this.playerName;
+        return Bukkit.getPlayer(this.playerUUID).getName();
     }
 
     public Profile getProfile(Player player) {
@@ -69,13 +76,13 @@ public class TickTimer {
     }
 
     public void start(Player player) {
-        if (!isRunning) {
+        if (getIsRunning()) {
             this.isRunning = true;
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    if (isRunning) {
-                        TickTimer.this.addTick();
+                    if (getIsRunning()) {
+                        addTick();
                         ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
                     }
                     else {
@@ -87,7 +94,7 @@ public class TickTimer {
     }
 
     public void stop(Player player) {
-        if (isRunning) {
+        if (getIsRunning()) {
             ActionBarUtils.sendActionbar(player, " ");
             this.isRunning = false;
         }

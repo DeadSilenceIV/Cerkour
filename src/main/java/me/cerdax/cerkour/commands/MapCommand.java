@@ -27,7 +27,7 @@ public class MapCommand implements CommandExecutor {
                 if (args.length > 1) {
                     Map map = Cerkour.getInstance().getMapManager().getMapByName(args[1]);
                     if (args[0].equalsIgnoreCase("create")) {
-                         Map create = Cerkour.getInstance().getMapManager().createMap(args[1]);
+                        Map create = Cerkour.getInstance().getMapManager().createMap(args[1]);
                         player.sendMessage("§6§lCerkour§e> You created the map: §6" + create.getName());
                     }
                     else if (args[0].equalsIgnoreCase("rankup")) {
