@@ -1,6 +1,7 @@
 package me.cerdax.cerkour;
 
 import me.cerdax.cerkour.commands.*;
+import me.cerdax.cerkour.database.DatabaseManager;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.listeners.*;
 import me.cerdax.cerkour.map.MapManager;
@@ -19,6 +20,7 @@ public final class Cerkour extends JavaPlugin {
     private static Cerkour instance;
     private MapManager mapManager;
     private ProfileManager profileManager;
+    private DatabaseManager databaseManager;
     private BukkitTask task;
     private BukkitTask task1;
     private BukkitAudiences adventure;
@@ -33,7 +35,6 @@ public final class Cerkour extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        registerManagers();
         registerCommands();
         registerListeners();
 
@@ -45,6 +46,8 @@ public final class Cerkour extends JavaPlugin {
 
         CustomFiles.setup("profiles");
         CustomFiles.getCustomFile("profiles").options().copyDefaults(true);
+
+        registerManagers();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.setGameMode(GameMode.ADVENTURE);
@@ -96,7 +99,8 @@ public final class Cerkour extends JavaPlugin {
 
     public void registerManagers() {
         mapManager = new MapManager();
-        profileManager = new ProfileManager();
+        databaseManager = new DatabaseManager(getConfig());
+        profileManager = new ProfileManager(databaseManager);
     }
 
     public static Cerkour getInstance() {

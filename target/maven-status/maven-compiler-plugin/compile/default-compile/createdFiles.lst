@@ -37,6 +37,7 @@ me\cerdax\cerkour\Cerkour.class
 me\cerdax\cerkour\commands\ProfileCommand.class
 me\cerdax\cerkour\commands\LeaveCommand.class
 me\cerdax\cerkour\profile\Profile.class
+me\cerdax\cerkour\database\DatabaseManager.class
 me\cerdax\cerkour\map\TickTimer.class
 me\cerdax\cerkour\listeners\PlayerMoveListener.class
 me\cerdax\cerkour\tablist\TablistAnimation.class

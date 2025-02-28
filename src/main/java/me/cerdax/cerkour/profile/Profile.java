@@ -197,9 +197,10 @@ public class Profile {
     }
 
     public void serialize() {
-        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
-        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
-        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".points", getPoints());
-        CustomFiles.saveCustomFile("profiles");
+        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
+        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
+        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".points", getPoints());
+        //CustomFiles.saveCustomFile("profiles");
+        Cerkour.getInstance().getProfileManager().saveProfile(Cerkour.getInstance().getProfileManager().getProfile(getUuid()));
     }
 }

@@ -1,5 +1,6 @@
 package me.cerdax.cerkour.profile;
 
+import me.cerdax.cerkour.database.DatabaseManager;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.utils.LocationUtils;
@@ -8,62 +9,92 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 public class ProfileManager {
 
-    List<Profile> profiles;
+    private final List<Profile> profiles;
+    private final DatabaseManager databaseManager;
 
-    public ProfileManager() {
+    public ProfileManager(DatabaseManager databaseManager) {
         this.profiles = new ArrayList<>();
-        deserialize();
+        this.databaseManager = databaseManager;
+        createTable();
+        loadProfiles();
     }
 
     public Profile getProfile(UUID uuid) {
-        Profile profile = this.profiles.stream().filter(profile1 -> profile1.getUuid().toString().equals(uuid.toString())).findAny().orElse(null);
+        Profile profile = this.profiles.stream()
+                .filter(p -> p.getUuid().equals(uuid))
+                .findFirst()
+                .orElse(null);
+
         if (profile == null) {
             profile = new Profile(uuid);
             this.profiles.add(profile);
+            saveProfile(profile); // Guardar el nuevo perfil en la base de datos
         }
+
         return profile;
     }
 
-    public void deserialize() {
-        if (!CustomFiles.isInitialized("profiles")) {
-            CustomFiles.setup("profiles");
+    private void createTable() {
+        String query = "CREATE TABLE IF NOT EXISTS profiles (" +
+                "uuid VARCHAR(36) PRIMARY KEY, " +
+                "coins INT DEFAULT 0, " +
+                "rankup INT DEFAULT 1, " +
+                "points INT DEFAULT 0" +
+                ");";
+
+        try (Connection connection = databaseManager.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            Bukkit.getLogger().severe("[ProfileManager] Error al crear la tabla de perfiles: " + e.getMessage());
         }
+    }
 
-        FileConfiguration config = CustomFiles.getCustomFile("profiles");
+    private void loadProfiles() {
+        String query = "SELECT * FROM profiles;";
 
-        if (config == null) {
-            Bukkit.getLogger().severe("Failed to load profiles configuration file.");
-            return;
-        }
+        try (Connection connection = databaseManager.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(query)) {
 
-        if (!config.contains("profiles")) {
-            config.createSection("profiles");
-            CustomFiles.saveCustomFile("profiles");
-        }
+            while (resultSet.next()) {
+                UUID uuid = UUID.fromString(resultSet.getString("uuid"));
+                int coins = resultSet.getInt("coins");
+                int rankUp = resultSet.getInt("rankup");
+                int points = resultSet.getInt("points");
 
-        ConfigurationSection section = config.getConfigurationSection("profiles");
-
-        if (section == null) {
-            Bukkit.getLogger().severe("No 'profiles' section found in the configuration file.");
-            return;
-        }
-
-        for (String uuidStr : section.getKeys(false)) {
-            ConfigurationSection profileSection = section.getConfigurationSection(uuidStr);
-            if (profileSection != null) {
-                UUID uuid = UUID.fromString(uuidStr);
-                int coins = profileSection.getInt("coins", 0);
-                int rankUp = profileSection.getInt("rankup", 1);
-                int points = profileSection.getInt("points", 0);
                 Profile profile = new Profile(uuid, coins, rankUp, points);
                 profiles.add(profile);
             }
+
+        } catch (SQLException e) {
+            Bukkit.getLogger().severe("[ProfileManager] Error al cargar perfiles: " + e.getMessage());
+        }
+    }
+
+    public void saveProfile(Profile profile) {
+        String query = "INSERT INTO profiles (uuid, coins, rankup, points) VALUES (?, ?, ?, ?) " +
+                "ON DUPLICATE KEY UPDATE coins = VALUES(coins), rankup = VALUES(rankup), points = VALUES(points);";
+
+        try (Connection connection = databaseManager.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setString(1, profile.getUuid().toString());
+            statement.setInt(2, profile.getCoins());
+            statement.setInt(3, profile.getRankUp());
+            statement.setInt(4, profile.getPoints());
+
+            statement.executeUpdate();
+
+        } catch (SQLException e) {
+            Bukkit.getLogger().severe("[ProfileManager] Error al guardar perfil: " + e.getMessage());
         }
     }
 }
