@@ -76,7 +76,7 @@ public class TickTimer {
     }
 
     public void start(Player player) {
-        if (getIsRunning()) {
+        if (!getIsRunning()) {
             this.isRunning = true;
             new BukkitRunnable() {
                 @Override

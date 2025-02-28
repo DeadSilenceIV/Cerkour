@@ -97,6 +97,7 @@ public class PlayerMoveListener implements Listener {
                     }
                     else if (map.getTimer(player).getBest() == 0) {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
+                        map.serialize();
                     }
                     else {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));

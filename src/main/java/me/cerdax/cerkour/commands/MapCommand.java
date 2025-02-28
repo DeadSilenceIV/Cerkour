@@ -179,7 +179,7 @@ public class MapCommand implements CommandExecutor {
                 }
                 else if (args[0].equalsIgnoreCase("setspawn")) {
                     Cerkour.getInstance().getConfig().set("spawn", LocationUtils.locationToString(player.getLocation()));
-                    Cerkour.getInstance().saveDefaultConfig();
+                    Cerkour.getInstance().saveConfig();
                     player.sendMessage("§6§lCerkour§e> You set the server spawn!");
                 }
             }
