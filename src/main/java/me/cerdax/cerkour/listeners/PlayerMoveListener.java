@@ -93,7 +93,7 @@ public class PlayerMoveListener implements Listener {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()) + "§e and got a new §6§lPERSONAL BEST §e(-§6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getBest() - map.getTimer(player).getTicks()) + "§e)");
                         map.getTimer(player).setBest(map.getTimer(player).getTicks());
                     }
-                    else if (map.getTimer(player).getBest() == 0) {
+                    else if (map.getTimer(player).getBest() == 0 && !map.isOS()) {
                         player.sendMessage("§6§lCerkour§e> You beat the map: §6" + profile.getMap().getName() + " §ein §6" + map.getTimer(player).getTimeFromTicks(map.getTimer(player).getTicks()));
                         map.getTimer(player).setBest(map.getTimer(player).getTicks());
                     }
@@ -105,13 +105,17 @@ public class PlayerMoveListener implements Listener {
                         if (!map.getIsRankUp()) {
                             if (map.getDifficulty() >= 7 && map.getDifficulty() < 9) {
                                 Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                                map.getTimer(player).setBest(map.getTimer(player).getTicks());
+                                profile.addPoints(PointsUtil.getPointsForDifficulty(map.getDifficulty()));
                                 profile.leaveMap();
-                                SoundUtils.playSoundRankUpAllPlayers(11);
+                                SoundUtils.playSoundRankUpAllPlayers(7);
                             }
                             else if (map.getDifficulty() >= 9) {;
                                 Bukkit.broadcastMessage("§6§lCerkour§e> §6" + player.getName() + " §ehas beaten the map " + RankUtils.getColoredDifficulty(map.getDifficulty()) + " §6" + map.getName());
+                                map.getTimer(player).setBest(map.getTimer(player).getTicks());
+                                profile.addPoints(PointsUtil.getPointsForDifficulty(map.getDifficulty()));
                                 profile.leaveMap();
-                                SoundUtils.playSoundRankUpAllPlayers(13);
+                                SoundUtils.playSoundRankUpAllPlayers(10);
                             }
                         }
                         map.getTimer(player).setBest(map.getTimer(player).getTicks());

@@ -37,7 +37,7 @@ public class Profile {
         this.rankUp = 1;
         this.practice = new Practice();
         this.points = 0;
-        serialize();
+        //serialize();
     }
 
     public Profile(UUID uuid, int coins, int rankUp, int points) {

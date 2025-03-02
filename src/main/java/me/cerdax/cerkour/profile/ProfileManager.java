@@ -35,9 +35,9 @@ public class ProfileManager {
         if (profile == null) {
             profile = new Profile(uuid);
             this.profiles.add(profile);
-            saveProfile(profile); // Guardar el nuevo perfil en la base de datos
+            saveProfile(profile);
+            profile.serialize();
         }
-
         return profile;
     }
 

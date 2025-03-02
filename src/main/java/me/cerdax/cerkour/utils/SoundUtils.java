@@ -11,7 +11,7 @@ public class SoundUtils {
         if (i < 7) {
             return Sound.EXPLODE;
         }
-        else if (i < 10) {
+        else if (i < 9) {
             return Sound.WITHER_SPAWN;
         }
         else {
