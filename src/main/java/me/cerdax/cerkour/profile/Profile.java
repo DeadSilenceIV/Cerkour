@@ -37,7 +37,6 @@ public class Profile {
         this.rankUp = 1;
         this.practice = new Practice();
         this.points = 0;
-        //serialize();
     }
 
     public Profile(UUID uuid, int coins, int rankUp, int points) {
@@ -51,12 +50,10 @@ public class Profile {
 
     public void addPoints(int amount) {
         this.points += amount;
-        serialize();
     }
 
     public void setPoints(int amount) {
         this.points = amount;
-        serialize();
     }
 
     public int getPoints() {
@@ -81,7 +78,6 @@ public class Profile {
 
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
-        serialize();
     }
 
     public void joinMap(Map map) {
@@ -197,10 +193,9 @@ public class Profile {
     }
 
     public void serialize() {
-        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
-        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
-        //CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".points", getPoints());
-        //CustomFiles.saveCustomFile("profiles");
-        Cerkour.getInstance().getProfileManager().saveProfile(Cerkour.getInstance().getProfileManager().getProfile(getUuid()));
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".coins", getCoins());
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".rankup", getRankUp());
+        CustomFiles.getCustomFile("profiles").set("profiles." + getUuid().toString() + ".points", getPoints());
+        CustomFiles.saveCustomFile("profiles");
     }
 }

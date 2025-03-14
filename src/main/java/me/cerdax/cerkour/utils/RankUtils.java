@@ -3,68 +3,36 @@ package me.cerdax.cerkour.utils;
 import org.bukkit.ChatColor;
 
 import javax.management.remote.rmi._RMIConnection_Stub;
+import java.util.HashMap;
+import java.util.Map;
 
 public class RankUtils {
-    public static String getColoredRank(int i) {
-        if (i == 1) {
-            return "§eI";
-        }
-        if (i == 2) {
-            return "§eII";
-        }
-        if (i == 3) {
-            return "§eIII";
-        }
-        if (i == 4) {
-            return "§aIV";
-        }
-        if (i == 5) {
-            return "§aV";
-        }
-        if (i == 6) {
-            return "§aVI";
-        }
-        if (i == 7) {
-            return "§d§lVII";
-        }
-        if (i == 8) {
-            return "§d§lVIII";
-        }
-        if (i == 9) {
-            return "§d§lIX";
-        }
-        if (i == 10) {
-            return "§c§lX";
-        }
-        if (i == 11) {
-            return "§c§lXI";
-        }
-        if (i == 12) {
-            return "§c§lXII";
-        }
-        if (i == 13) {
-            return "§9§lXIII";
-        }
-        if (i == 14) {
-            return "§9§lXIV";
-        }
-        return null;
-    }
-    public static String getColoredDifficulty(int i) {
-        switch(i) {
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-            case 5:
-            case 6:
-                return "§8[§e" + i + "§8]";
-            case 7:
-            case 8:
-                return "§8[§a" + i + "§8]";
-            default:
-                return "§8[§c" + i + "§8]";
 
-        }
+    private static final Map<Integer, String> RANK_MAP = new HashMap<>();
+
+    static {
+        RANK_MAP.put(1, "§eI");
+        RANK_MAP.put(2, "§eII");
+        RANK_MAP.put(3, "§eIII");
+        RANK_MAP.put(4, "§aIV");
+        RANK_MAP.put(5, "§aV");
+        RANK_MAP.put(6, "§aVI");
+        RANK_MAP.put(7, "§d§lVII");
+        RANK_MAP.put(8, "§d§lVIII");
+        RANK_MAP.put(9, "§d§lIX");
+        RANK_MAP.put(10, "§c§lX");
+        RANK_MAP.put(11, "§c§lXI");
+        RANK_MAP.put(12, "§c§lXII");
+        RANK_MAP.put(13, "§9§lXIII");
+        RANK_MAP.put(14, "§9§lXIV");
+    }
+
+    public static String getColoredRank(int i) {
+        return RANK_MAP.getOrDefault(i, "§7Unknown");
+    }
+
+    public static String getColoredDifficulty(int i) {
+        String color = (i <= 6) ? "§e" : (i <= 8) ? "§a" : "§c";
+        return "§8[" + color + i + "§8]";
     }
 }

@@ -27,18 +27,12 @@ public class ProfileManager {
     }
 
     public Profile getProfile(UUID uuid) {
-        Profile profile = this.profiles.stream()
+
+
+        return this.profiles.stream()
                 .filter(p -> p.getUuid().equals(uuid))
                 .findFirst()
                 .orElse(null);
-
-        if (profile == null) {
-            profile = new Profile(uuid);
-            this.profiles.add(profile);
-            saveProfile(profile);
-            profile.serialize();
-        }
-        return profile;
     }
 
     private void createTable() {
@@ -53,7 +47,7 @@ public class ProfileManager {
              Statement statement = connection.createStatement()) {
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            Bukkit.getLogger().severe("[ProfileManager] Error al crear la tabla de perfiles: " + e.getMessage());
+            Bukkit.getLogger().severe("[ProfileManager] Error creating profile table: " + e.getMessage());
         }
     }
 
@@ -75,7 +69,13 @@ public class ProfileManager {
             }
 
         } catch (SQLException e) {
-            Bukkit.getLogger().severe("[ProfileManager] Error al cargar perfiles: " + e.getMessage());
+            Bukkit.getLogger().severe("[ProfileManager] Error loading profile: " + e.getMessage());
+        }
+    }
+
+    public void saveAll(){
+        for(Profile profiles : profiles){
+            saveProfile(profiles);
         }
     }
 
@@ -94,7 +94,10 @@ public class ProfileManager {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            Bukkit.getLogger().severe("[ProfileManager] Error al guardar perfil: " + e.getMessage());
+            Bukkit.getLogger().severe("[ProfileManager] Error saving profile: " + e.getMessage());
+        }
+        if(!profiles.contains(profile)){
+            profiles.add(profile);
         }
     }
 }

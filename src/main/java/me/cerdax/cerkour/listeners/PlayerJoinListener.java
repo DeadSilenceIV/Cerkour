@@ -1,6 +1,8 @@
 package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
+import me.cerdax.cerkour.profile.Profile;
+import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import me.cerdax.cerkour.utils.RankUtils;
@@ -14,6 +16,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 public class PlayerJoinListener implements Listener {
 
+    ProfileManager profileManager;
+
+    public PlayerJoinListener(ProfileManager profileManager) {
+        this.profileManager = profileManager;
+    }
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
@@ -26,5 +34,9 @@ public class PlayerJoinListener implements Listener {
             }, 3L);
         e.setJoinMessage("§e[§a§l+§e] §6" + player.getName());
         player.setAllowFlight(false);
+        if(profileManager.getProfile(e.getPlayer().getUniqueId()) == null) {
+            Profile profile = new Profile(e.getPlayer().getUniqueId());
+            profileManager.saveProfile(profile);
+        }
     }
 }

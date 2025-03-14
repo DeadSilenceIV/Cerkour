@@ -25,8 +25,6 @@ public class DatabaseManager {
         this.username = config.getString("mysql-data.username");
         this.password = config.getString("mysql-data.password");
 
-
-
         connect();
     }
 
@@ -34,9 +32,7 @@ public class DatabaseManager {
         try {
             String url = "jdbc:mysql://" + host + ":" + port + "/" + database +
                     "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=UTF-8";
-
             connection = DriverManager.getConnection(url, username, password);
-            Cerkour.getInstance().getLogger().info("Connected to MySQ database.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

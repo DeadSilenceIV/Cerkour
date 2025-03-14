@@ -89,14 +89,14 @@ public class TickTimer {
                         cancel();
                     }
                 }
-            }.runTaskTimer(Cerkour.getInstance(), 0L, 1L);
+            }.runTaskTimerAsynchronously(Cerkour.getInstance(), 0L, 1L);
         }
     }
 
     public void stop(Player player) {
         if (getIsRunning()) {
-            ActionBarUtils.sendActionbar(player, " ");
             this.isRunning = false;
+            ActionBarUtils.sendActionbar(player, " ");
         }
     }
 
