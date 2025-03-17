@@ -1,7 +1,6 @@
 package me.cerdax.cerkour.commands;
 
 import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
 import org.bukkit.command.Command;

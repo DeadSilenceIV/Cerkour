@@ -1,11 +1,9 @@
 package me.cerdax.cerkour.listeners;
 
 import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.map.TickTimer;
 import me.cerdax.cerkour.profile.Profile;
-import me.cerdax.cerkour.utils.ActionBarUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -4,7 +4,6 @@ import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Practice;
 import me.cerdax.cerkour.profile.Profile;
-import me.cerdax.cerkour.utils.InventoryUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

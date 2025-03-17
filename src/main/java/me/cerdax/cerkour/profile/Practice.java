@@ -1,11 +1,7 @@
 package me.cerdax.cerkour.profile;
 
 import me.cerdax.cerkour.map.CheckPoint;
-import me.cerdax.cerkour.map.Map;
-import me.cerdax.cerkour.utils.InventoryUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 
 public class Practice {
 

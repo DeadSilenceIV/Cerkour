@@ -5,7 +5,6 @@ import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -17,7 +16,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class InventoryClickListener implements Listener {

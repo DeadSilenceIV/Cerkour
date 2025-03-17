@@ -2,7 +2,6 @@ package me.cerdax.cerkour.scoreboard;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
-import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

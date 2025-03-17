@@ -1,7 +1,5 @@
 package me.cerdax.cerkour.utils;
 
-import me.cerdax.cerkour.Cerkour;
-import net.kyori.adventure.audience.Audience;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

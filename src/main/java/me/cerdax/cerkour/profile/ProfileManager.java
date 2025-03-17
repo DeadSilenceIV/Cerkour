@@ -1,13 +1,7 @@
 package me.cerdax.cerkour.profile;
 
 import me.cerdax.cerkour.database.DatabaseManager;
-import me.cerdax.cerkour.files.CustomFiles;
-import me.cerdax.cerkour.map.Map;
-import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.*;
 import java.util.ArrayList;

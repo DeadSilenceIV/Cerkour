@@ -1,18 +1,15 @@
 package me.cerdax.cerkour.map;
 
-import java.util.*;
-import java.util.stream.Collectors;
-
-import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
-import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
-import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 public class Map {
 
@@ -58,14 +55,16 @@ public class Map {
         TickTimer playerTimer = getTimer(player);
         if (toggle) {
             for (TickTimer timer : getTimers()) {
-                if (timer == playerTimer) {
+                if (timer.equals(playerTimer)) {
                     timer.start(player);
+                    return;
                 }
             }
         } else {
             for (TickTimer timer : getTimers()) {
-                if (timer == playerTimer) {
+                if (timer.equals(playerTimer)) {
                     timer.stop(player);
+                    return;
                 }
             }
         }
@@ -103,7 +102,7 @@ public class Map {
     public TickTimer getTimer(Player player) {
         if (this.timers != null) {
             for (TickTimer timer : getTimers()) {
-                if (timer.getPlayerUUID().toString().equalsIgnoreCase(player.getUniqueId().toString())) {
+                if (timer.getPlayerUUID().equals(player.getUniqueId())) {
                     return timer;
                 }
             }

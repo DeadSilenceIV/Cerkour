@@ -1,10 +1,10 @@
 package me.cerdax.cerkour;
 
 import me.cerdax.cerkour.commands.*;
+import me.cerdax.cerkour.database.DatabaseManager;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.listeners.*;
 import me.cerdax.cerkour.map.MapManager;
-import me.cerdax.cerkour.database.DatabaseManager;
 import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.scoreboard.Board;
 import me.cerdax.cerkour.tablist.TablistAnimation;

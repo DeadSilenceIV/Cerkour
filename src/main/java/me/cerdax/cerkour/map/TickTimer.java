@@ -5,20 +5,22 @@ import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.text.SimpleDateFormat;
+import java.util.Objects;
+import java.util.TimeZone;
 import java.util.UUID;
 
 public class TickTimer {
-
     private long ticks;
     private long stashedTicks;
     private long best;
     private boolean isRunning;
-    private static final double TICKS_PER_SECOND = 20.0;
+    private SimpleDateFormat secondsFormat;
+    private SimpleDateFormat minuteFormat;
+    private SimpleDateFormat hourFormat;
     private UUID playerUUID;
-
     public TickTimer(UUID playerUUID) {
         this.ticks = 0;
         this.isRunning = false;
@@ -55,8 +57,8 @@ public class TickTimer {
         this.best = ticks;
     }
 
-    public void addTick() {
-        this.ticks++;
+    public void tickTimer() {
+        ticks++;
     }
 
     public void setTicks(long ticks) {
@@ -82,14 +84,15 @@ public class TickTimer {
                 @Override
                 public void run() {
                     if (getIsRunning()) {
-                        addTick();
-                        ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
-                    }
-                    else {
+                        tickTimer();
+                        if(ticks%3 == 0) {
+                            ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
+                        }
+                    } else {
                         cancel();
                     }
                 }
-            }.runTaskTimerAsynchronously(Cerkour.getInstance(), 0L, 1L);
+            }.runTaskTimerAsynchronously(Cerkour.getInstance(), 1L, 1L);
         }
     }
 
@@ -101,38 +104,58 @@ public class TickTimer {
     }
 
     public String getTimeFromTicks(long ticks) {
-        long totalHours = 0;
-        long totalMinutes = 0;
-        long totalSeconds = (long) ((ticks / TICKS_PER_SECOND));
-        long remainingTicks = ticks % (int) TICKS_PER_SECOND;
-        remainingTicks *= 5;
-
+        long millis = (5*(Math.round((double)ticks/5)))*50;
+        String formatted;
         if (ticks >= 20*60) {
-            totalMinutes = totalSeconds / 60;
-            totalSeconds = totalSeconds % 60;
             if (ticks >= 20*60*60) {
-                totalHours = totalMinutes / 60;
-                totalMinutes = totalMinutes % 60;
-                return String.format("%04d:%02d:%02d.%02d", totalHours, totalMinutes, totalSeconds, remainingTicks);
+                formatted = getHourFormat().format(millis);
+            }else{
+                formatted = getMinuteFormat().format(millis);
             }
-            else if (totalMinutes < 10) {
-                return String.format("%01d:%02d.%02d", totalMinutes, totalSeconds, remainingTicks);
-            }
-            else {
-                return String.format("%02d:%02d.%02d", totalMinutes, totalSeconds, remainingTicks);
-            }
+        }else{
+            formatted = getSecondFormat().format(millis);
         }
-        else {
-            if (totalSeconds < 10) {
-                return String.format("%01d.%02d", totalSeconds, remainingTicks);
-            }
-            else {
-                return String.format("%02d.%02d", totalSeconds, remainingTicks);
-            }
-        }
+        return formatted.substring(0, formatted.length()-1);
     }
 
     public boolean getIsRunning() {
         return isRunning;
+    }
+
+    private SimpleDateFormat getSecondFormat(){
+        if(secondsFormat == null){
+            secondsFormat = new SimpleDateFormat("ss:SSS");
+            secondsFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
+        return secondsFormat;
+    }
+
+    private SimpleDateFormat getMinuteFormat(){
+        if(minuteFormat == null){
+            minuteFormat = new SimpleDateFormat("mm:ss:SSS");
+            minuteFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
+        return minuteFormat;
+    }
+
+    private SimpleDateFormat getHourFormat(){
+        if(hourFormat == null){
+            hourFormat = new SimpleDateFormat("HH:mm:ss:SSS");
+            hourFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        }
+        return hourFormat;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TickTimer tickTimer = (TickTimer) o;
+        return Objects.equals(playerUUID, tickTimer.playerUUID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(playerUUID);
     }
 }

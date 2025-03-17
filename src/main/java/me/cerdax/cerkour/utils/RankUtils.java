@@ -1,8 +1,5 @@
 package me.cerdax.cerkour.utils;
 
-import org.bukkit.ChatColor;
-
-import javax.management.remote.rmi._RMIConnection_Stub;
 import java.util.HashMap;
 import java.util.Map;
 

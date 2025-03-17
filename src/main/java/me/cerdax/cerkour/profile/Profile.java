@@ -2,7 +2,6 @@ package me.cerdax.cerkour.profile;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
-import me.cerdax.cerkour.map.CheckPoint;
 import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.map.TickTimer;
 import me.cerdax.cerkour.utils.ActionBarUtils;
@@ -10,14 +9,12 @@ import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
 import me.cerdax.cerkour.utils.TitleUtils;
 import net.kyori.adventure.audience.Audience;
-import net.kyori.adventure.text.event.ClickEvent;
-import org.bukkit.*;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.UUID;
 

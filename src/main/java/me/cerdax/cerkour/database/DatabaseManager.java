@@ -1,6 +1,5 @@
 package me.cerdax.cerkour.database;
 
-import me.cerdax.cerkour.Cerkour;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.Connection;
