@@ -32,6 +32,22 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.5.3</version>
+                <configuration>
+                    <relocations>
+                        <relocation>
+                            <pattern>org.mariadb.jdbc</pattern>
+                            <shadedPattern>me.cerdax.cerkour.utils.mariadb</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.zaxxer.hikari</pattern>
+                            <shadedPattern>me.cerdax.cerkour.utils.hikari</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>net.kyori</pattern>
+                            <shadedPattern>me.cerdax.cerkour.utils.adventure</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -79,6 +95,33 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>4.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-nop</artifactId>
+            <version>2.0.0-alpha1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.0-alpha1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

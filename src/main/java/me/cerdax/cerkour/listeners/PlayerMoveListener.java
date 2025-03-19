@@ -57,7 +57,6 @@ public class PlayerMoveListener implements Listener {
             map.getCheckpoints().forEach(cp -> cp.getPlayerUUIDs().remove(player.getUniqueId()));
             c.addPlayer(player.getUniqueId());
             player.sendMessage("§6§lCerkour§e> You reached the checkpoint!");
-            map.serialize();
         } else {
             practice.setCheckPoint(c);
         }
@@ -94,7 +93,6 @@ public class PlayerMoveListener implements Listener {
             handleRankUp(player, map, profile);
             profile.leaveMap();
             map.getTimer(player).resetTimer();
-            map.serialize();
         }
     }
 

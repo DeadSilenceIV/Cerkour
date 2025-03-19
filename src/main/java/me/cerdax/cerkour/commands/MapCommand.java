@@ -30,6 +30,10 @@ public class MapCommand implements CommandExecutor {
         switch (subCommand) {
             case "create":
                 if (mapName != null) {
+                    if(map != null) {
+                        player.sendMessage("§6§lCerkour§e> Map already exists!");
+                        return true;
+                    }
                     Map create = Cerkour.getInstance().getMapManager().createMap(mapName);
                     player.sendMessage("§6§lCerkour§e> You created the map: §6" + create.getName());
                 }
@@ -103,7 +107,6 @@ public class MapCommand implements CommandExecutor {
                     try {
                         int cpIndex = Integer.parseInt(args[2]);
                         map.getCheckPoint(cpIndex).setLd(!map.getCheckPoint(cpIndex).isLd());
-                        map.serialize();
                         player.sendMessage("§6§lCerkour§e> The checkpoint: §6" + cpIndex + " §eis now " + (map.getCheckPoint(cpIndex).isLd() ? "l/d" : "no longer l/d") + "!");
                     } catch (NumberFormatException e) {
                         player.sendMessage("§6§lCerkour§e> §cInvalid checkpoint number!");
@@ -116,7 +119,6 @@ public class MapCommand implements CommandExecutor {
                 if (map != null && args.length > 2) {
                     try {
                         map.getCheckPoint(Integer.parseInt(args[2])).setFrom(player.getLocation());
-                        map.serialize();
                         player.sendMessage("§6§lCerkour§e> You set the FROM Location");
                     } catch (NumberFormatException e) {
                         player.sendMessage("§6§lCerkour§e> §cInvalid checkpoint number!");
@@ -129,7 +131,6 @@ public class MapCommand implements CommandExecutor {
                 if (map != null && args.length > 2) {
                     try {
                         map.getCheckPoint(Integer.parseInt(args[2])).setTo(player.getLocation());
-                        map.serialize();
                         player.sendMessage("§6§lCerkour§e> You set the TO Location");
                     } catch (NumberFormatException e) {
                         player.sendMessage("§6§lCerkour§e> §cInvalid checkpoint number!");
@@ -144,7 +145,6 @@ public class MapCommand implements CommandExecutor {
                         int cpIndex = Integer.parseInt(args[2]);
                         map.getCheckPoint(cpIndex).setEffect(PotionEffectType.getByName(args[3]), Integer.parseInt(args[4]));
                         player.sendMessage("§6§lCerkour§e> You set the checkpoint to the effect: §6" + map.getCheckPoint(cpIndex).getEffectType().getName() + " " + map.getCheckPoint(cpIndex).getAmplifier());
-                        map.serialize();
                     } catch (NumberFormatException e) {
                         player.sendMessage("§6§lCerkour§e> §cInvalid effect or amplifier value!");
                     }

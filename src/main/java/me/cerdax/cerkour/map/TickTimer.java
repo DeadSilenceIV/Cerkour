@@ -4,15 +4,17 @@ import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
-import java.util.Objects;
-import java.util.TimeZone;
-import java.util.UUID;
+import java.util.*;
+import java.util.Map;
 
-public class TickTimer {
+@SerializableAs("TickTimer")
+public class TickTimer implements ConfigurationSerializable {
     private long ticks;
     private long stashedTicks;
     private long best;
@@ -158,4 +160,21 @@ public class TickTimer {
     public int hashCode() {
         return Objects.hashCode(playerUUID);
     }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("uuid", playerUUID.toString());
+        map.put("ticks", ticks);
+        map.put("best", best);
+        return map;
+    }
+
+    public static TickTimer deserialize(Map<String, Object> map) {
+        TickTimer timer = new TickTimer(UUID.fromString((String) map.get("uuid")));
+        timer.setTicks((long) map.get("ticks"));
+        timer.setBest((long) map.get("best"));
+        return timer;
+    }
+
 }

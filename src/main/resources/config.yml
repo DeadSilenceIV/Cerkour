@@ -4,4 +4,3 @@ mysql-data:
   database: parkour
   username: root
   password: 123456
-  ssl: true

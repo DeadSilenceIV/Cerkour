@@ -2,15 +2,21 @@ package me.cerdax.cerkour;
 
 import me.cerdax.cerkour.commands.*;
 import me.cerdax.cerkour.database.DatabaseManager;
+import me.cerdax.cerkour.database.MysqlStorage;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.listeners.*;
+import me.cerdax.cerkour.map.CheckPoint;
+import me.cerdax.cerkour.map.Map;
 import me.cerdax.cerkour.map.MapManager;
+import me.cerdax.cerkour.map.TickTimer;
 import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.scoreboard.Board;
 import me.cerdax.cerkour.tablist.TablistAnimation;
+import me.cerdax.cerkour.tasks.SaveTask;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
@@ -18,10 +24,12 @@ import org.bukkit.scheduler.BukkitTask;
 public final class Cerkour extends JavaPlugin {
 
     private static Cerkour instance;
+    private MysqlStorage storage;
     private MapManager mapManager;
     private ProfileManager profileManager;
     private BukkitTask task;
     private BukkitTask task1;
+    private SaveTask saveTask;
     private BukkitAudiences adventure;
 
     public BukkitAudiences adventure() {
@@ -37,6 +45,8 @@ public final class Cerkour extends JavaPlugin {
         saveDefaultConfig();
 
         instance = this;
+        ConfigurationSerialization.registerClass(CheckPoint.class,"CheckPoint");
+        ConfigurationSerialization.registerClass(TickTimer.class,"TickTimer");
         registerManagers();
         registerCommands();
         registerListeners();
@@ -55,14 +65,18 @@ public final class Cerkour extends JavaPlugin {
         task = getServer().getScheduler().runTaskTimer(this, Board.getInstance(), 0, 20);
         this.adventure = BukkitAudiences.create(this);
         task1 = getServer().getScheduler().runTaskTimer(this, TablistAnimation.getInstance(), 0, 20);
+        saveTask = new SaveTask();
     }
 
     @Override
     public void onDisable() {
-        super.onDisable();
         if (task != null) {
             task.cancel();
         }
+        for (Map map : mapManager.getAllMaps()) {
+            map.save();
+        }
+        storage.stopServices();
         if(this.adventure != null) {
             this.adventure.close();
             this.adventure = null;
@@ -98,6 +112,7 @@ public final class Cerkour extends JavaPlugin {
     }
 
     public void registerManagers() {
+        storage = new MysqlStorage();
         mapManager = new MapManager();
 
         DatabaseManager databaseManager = new DatabaseManager(getConfig());
@@ -120,5 +135,9 @@ public final class Cerkour extends JavaPlugin {
 
     public BukkitAudiences getAdventure() {
         return this.adventure;
+    }
+
+    public MysqlStorage getStorage() {
+        return this.storage;
     }
 }

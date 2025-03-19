@@ -121,7 +121,6 @@ public class Profile {
             if (getMap().getTimer(player).getIsRunning()) {
                 getMap().toggleTimer(false, player);
             }
-            this.map.serialize();
             this.map = null;
             for (PotionEffect p : player.getActivePotionEffects()) {
                 player.removePotionEffect(p.getType());
@@ -167,7 +166,6 @@ public class Profile {
         TickTimer timer = map.getTimer(player);
         timer.setTicks(timer.getStashedTicks());
         timer.clearStashedTicks();
-        map.serialize();
         getMap().toggleTimer(true, player);
         for (PotionEffect p : player.getActivePotionEffects()) {
             player.removePotionEffect(p.getType());

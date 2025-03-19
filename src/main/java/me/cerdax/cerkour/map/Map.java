@@ -1,5 +1,6 @@
 package me.cerdax.cerkour.map;
 
+import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.files.CustomFiles;
 import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
@@ -35,7 +36,6 @@ public class Map {
         this.state = 1;
         this.difficulty = 1;
         this.deathBlocks = new ArrayList<>();
-        serialize();
     }
 
     public Map(UUID uuid, String name, Location spawnLocation, Location endLocation, int rankUp, List<CheckPoint> checkpoints, List<TickTimer> timers, int state, int difficulty, List<Material> deathBlocks) {
@@ -78,12 +78,10 @@ public class Map {
         if (!getDeathBlocks().contains(block)) {
             this.deathBlocks.add(block);
         }
-        serialize();
     }
 
     public void removeDeathBlocks(Material block) {
         this.deathBlocks.removeIf(db -> db.equals(block));
-        serialize();
     }
 
     public int getDifficulty() {
@@ -92,7 +90,6 @@ public class Map {
 
     public void setDifficulty(int difficulty) {
         this.difficulty = difficulty;
-        serialize();
     }
 
     public List<TickTimer> getTimers() {
@@ -125,7 +122,6 @@ public class Map {
 
     public void setRankUp(int rankUp) {
         this.rankUp = rankUp;
-        serialize();
     }
 
     public int getState() {
@@ -134,7 +130,6 @@ public class Map {
 
     public void setState(int state) {
         this.state = state;
-        serialize();
     }
 
     public boolean isOS() {
@@ -154,7 +149,6 @@ public class Map {
 
     public void setStartLocation(Location startLocation) {
         this.startLocation = startLocation;
-        serialize();
     }
 
     public Location getStartLocation() {
@@ -163,7 +157,6 @@ public class Map {
 
     public void setEndLocation(Location endLocation) {
         this.endLocation = endLocation;
-        serialize();
     }
 
     public Location getEndLocation() {
@@ -185,7 +178,6 @@ public class Map {
 
     public void addCheckPoint(int index) {
         this.checkpoints.add(new CheckPoint(index));
-        serialize();
     }
 
     public Location getCheckPointLocation(Player player) {
@@ -197,66 +189,8 @@ public class Map {
         return getStartLocation();
     }
 
-    private boolean doesMapExist() {
-        FileConfiguration config = CustomFiles.getCustomFile("maps");
-        return config.contains("maps." + getMapUUID().toString());
-    }
-
-    public void serialize() {
-        FileConfiguration config = CustomFiles.getCustomFile("maps");
-        if (config != null && !doesMapExist()) {
-            config.createSection("maps." + getMapUUID().toString());
-        }
-        config.set("maps." + getMapUUID().toString() + ".name", getName());
-        if (getStartLocation() != null) {
-            config.set("maps." + getMapUUID().toString() + ".spawn", LocationUtils.locationToString(getStartLocation()));
-        }
-        if (getEndLocation() != null) {
-            config.set("maps." + getMapUUID().toString() + ".end", LocationUtils.locationToString(getEndLocation()));
-        }
-        if (getCheckpoints() != null && !getCheckpoints().isEmpty()) {
-            config.createSection("maps." + getMapUUID().toString() + ".checkpoints");
-            for (CheckPoint c : getCheckpoints()) {
-                String checkpointPath = "maps." + getMapUUID().toString() + ".checkpoints.checkpoint" + c.getIndex();
-                config.set(checkpointPath + ".index", c.getIndex());
-                config.set(checkpointPath + ".ld", c.isLd());
-                if (c.getFrom() != null) {
-                    config.set(checkpointPath + ".from", LocationUtils.locationToString(c.getFrom()));
-                }
-                if (c.getTo() != null) {
-                    config.set(checkpointPath + ".to", LocationUtils.locationToString(c.getTo()));
-                }
-                config.set(checkpointPath + ".amplifier", c.getAmplifier());
-                if (c.getEffectType() != null) {
-                    config.set(checkpointPath + ".potion", c.getEffectType().getName());
-                }
-                List<UUID> playerUUIDs = c.getPlayerUUIDs();
-                List<String> playerUUIDString = new ArrayList<>();
-                for (UUID uuid : playerUUIDs) {
-                    playerUUIDString.add(uuid.toString());
-                }
-                config.set(checkpointPath + ".players", playerUUIDString);
-            }
-        }
-        if (getDeathBlocks() != null && !getDeathBlocks().isEmpty()) {
-            List<String> blockNames = new ArrayList<>();
-            for (Material db : getDeathBlocks()) {
-                blockNames.add(db.name());
-            }
-            config.set("maps." + getMapUUID() + ".deathBlocks", blockNames);
-        }
-        if (getTimers() != null && !getTimers().isEmpty()) {
-            config.createSection("maps." + getMapUUID().toString() + ".timers");
-            for (TickTimer timer : getTimers()) {
-                String timerPath = "maps." + getMapUUID().toString() + ".timers." + timer.getPlayerUUID().toString();
-                config.set(timerPath + ".ticks", timer.getTicks());
-                config.set(timerPath + ".best", timer.getBest());
-            }
-        }
-        config.set("maps." + getMapUUID().toString() + ".rankup", getRankUp());
-        config.set("maps." + getMapUUID().toString() + ".state", getState());
-        config.set("maps." + getMapUUID().toString() + ".difficulty", getDifficulty());
-        CustomFiles.saveCustomFile("maps");
+    public void save(){
+        Cerkour.getInstance().getStorage().save(this);
     }
 
 }

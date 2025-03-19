@@ -1,14 +1,17 @@
 package me.cerdax.cerkour.map;
 
+import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.Map;
 
-public class CheckPoint {
+@SerializableAs("CheckPoint")
+public class CheckPoint implements ConfigurationSerializable {
 
     private final int index;
     private boolean ld;
@@ -98,4 +101,46 @@ public class CheckPoint {
     }
 
     public void removePlayer(UUID uuid) { this.playerUUIDs.remove(uuid); }
+
+    @Override
+    public Map<String, Object> serialize() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("index", this.index);
+        map.put("ld", this.ld);
+        if (this.from != null) {
+            map.put("from", LocationUtils.locationToString(this.from));
+        }
+        if (this.to != null) {
+            map.put("to", LocationUtils.locationToString(this.to));
+        }
+        map.put("amplifier", this.amplifier);
+        if (this.effect != null) {
+            map.put("potion", this.effect.getName());
+        }
+        List<String> playerUUIDs = new ArrayList<>();
+        for (UUID uuid : this.playerUUIDs) {
+            playerUUIDs.add(uuid.toString());
+        }
+        map.put("players", playerUUIDs);
+        return map;
+    }
+
+    public static CheckPoint deserialize(Map<String, Object> map) {
+        int index = (int) map.get("index");
+        boolean ld = (boolean) map.get("ld");
+        Location from = map.get("from") != null ? LocationUtils.stringToLocation((String) map.get("from")) : null;
+        Location to = map.get("to") != null ? LocationUtils.stringToLocation((String) map.get("to")) : null;
+        int amplifier = (int) map.get("amplifier");
+        String potionName = (String) map.get("potion");
+        PotionEffectType potionType = null;
+        if (potionName != null && !potionName.isEmpty()) {
+            potionType = PotionEffectType.getByName(potionName);
+        }
+        List<String> playerUUIDs = (List<String>) map.get("players");
+        List<UUID> players = new ArrayList<>();
+        for (String p : playerUUIDs) {
+            players.add(UUID.fromString(p));
+        }
+        return new CheckPoint(index, ld, from, to, players, potionType, amplifier);
+    }
 }
