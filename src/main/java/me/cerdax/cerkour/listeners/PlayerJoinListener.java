@@ -5,7 +5,6 @@ import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.profile.ProfileManager;
 import me.cerdax.cerkour.utils.InventoryUtils;
 import me.cerdax.cerkour.utils.LocationUtils;
-import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
@@ -30,7 +29,6 @@ public class PlayerJoinListener implements Listener {
                 player.getInventory().clear();
                 InventoryUtils.lobbyInventory(player);
                 player.teleport(LocationUtils.getSpawn());
-                player.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getRankUp()) + "§r " + player.getDisplayName());
             }, 3L);
         e.setJoinMessage("§e[§a§l+§e] §6" + player.getName());
         player.setAllowFlight(false);

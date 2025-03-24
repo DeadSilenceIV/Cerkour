@@ -2,7 +2,6 @@ package me.cerdax.cerkour.commands;
 
 import me.cerdax.cerkour.Cerkour;
 import me.cerdax.cerkour.profile.Profile;
-import me.cerdax.cerkour.utils.RankUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,7 +13,7 @@ public class ProfileCommand implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         Player player = (Player) sender;
         if (args.length > 1) {
-            Player targetPlayer = null;
+            Player targetPlayer;
             targetPlayer = Bukkit.getPlayer(args[1]);
             if (targetPlayer != null) {
                 Profile profile = Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId());
@@ -22,7 +21,6 @@ public class ProfileCommand implements CommandExecutor {
                     try {
                         profile.setRankUp(Integer.parseInt(args[2]));
                         player.sendMessage("§6§lCerkour§e> You set: §6" + targetPlayer.getName() + " §erank to: §6" + profile.getRankUp());
-                        targetPlayer.setPlayerListName(RankUtils.getColoredRank(Cerkour.getInstance().getProfileManager().getProfile(targetPlayer.getUniqueId()).getRankUp()) + "§r " + targetPlayer.getDisplayName());
                     }
                     catch (NumberFormatException e) {
                         player.sendMessage("§6§lCerkour§e> You may only use whole numbers!");

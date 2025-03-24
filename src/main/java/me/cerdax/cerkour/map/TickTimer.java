@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
-import java.util.*;
 import java.util.Map;
+import java.util.*;
 
 @SerializableAs("TickTimer")
 public class TickTimer implements ConfigurationSerializable {

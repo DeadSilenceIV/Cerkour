@@ -1,14 +1,7 @@
 package me.cerdax.cerkour.map;
 
 import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.files.CustomFiles;
-import me.cerdax.cerkour.utils.LocationUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,11 +1,11 @@
 package me.cerdax.cerkour.map;
 
 import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.files.CustomFiles;
-import me.cerdax.cerkour.utils.LocationUtils;
+import me.cerdax.cerkour.map.visualizer.buttons.DefaultMapButton;
+import me.cerdax.cerkour.map.visualizer.buttons.RankupMapButton;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -24,7 +24,8 @@ public class Map {
     private int state; //1 = OS, 2 = Speedrun
     private int difficulty;
     private List<Material> deathBlocks;
-
+    private DefaultMapButton cachedMapButton;
+    private RankupMapButton cachedRankupButton;
     public Map(String name) {
         this.uuid = UUID.randomUUID();
         this.name = name;
@@ -96,7 +97,7 @@ public class Map {
         return this.timers;
     }
 
-    public TickTimer getTimer(Player player) {
+    public TickTimer getTimer(OfflinePlayer player) {
         if (this.timers != null) {
             for (TickTimer timer : getTimers()) {
                 if (timer.getPlayerUUID().equals(player.getUniqueId())) {
@@ -191,6 +192,22 @@ public class Map {
 
     public void save(){
         Cerkour.getInstance().getStorage().save(this);
+    }
+
+    public DefaultMapButton getDefaultMapButton(int slot){
+        if(cachedMapButton == null){
+            cachedMapButton = new DefaultMapButton(this);
+        }
+        cachedMapButton.setSlot(slot);
+        return cachedMapButton;
+    }
+
+    public RankupMapButton getRankupMapButton(int slot){
+        if(cachedRankupButton == null){
+            cachedRankupButton = new RankupMapButton(this);
+        }
+        cachedRankupButton.setSlot(slot);
+        return cachedRankupButton;
     }
 
 }

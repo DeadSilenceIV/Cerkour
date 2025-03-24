@@ -7,8 +7,8 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
 import java.util.Map;
+import java.util.*;
 
 @SerializableAs("CheckPoint")
 public class CheckPoint implements ConfigurationSerializable {
