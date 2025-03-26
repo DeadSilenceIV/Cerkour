@@ -26,6 +26,7 @@ public abstract class MapVisualizer extends MultiPagesInventory<MapVisualizerPag
     @Getter protected final long forceRefreshInterval;
     @Getter protected int contentAmount;
     @Getter @Setter protected boolean forceRefresh;
+    @Getter @Setter protected int selectedDifficulty;
     public MapVisualizer(UUID player) {
         plugin = Cerkour.getInstance();
         mapManager = plugin.getMapManager();
@@ -118,9 +119,9 @@ public abstract class MapVisualizer extends MultiPagesInventory<MapVisualizerPag
 
     public List<Map> getOrderedContent(SortType sortType){
         if(sortType == SortType.DIFFICULTY){
-            return getContent().stream().sorted(Comparator.comparing(Map::getDifficulty)).collect(Collectors.toList());
+            return getContent().stream().filter(map -> map.getDifficulty() == selectedDifficulty).collect(Collectors.toList());
         }
-        return getContent();
+        return getContent().stream().sorted(Comparator.comparing(Map::getDifficulty)).collect(Collectors.toList());
     }
 
     public abstract List<Map> getContent();

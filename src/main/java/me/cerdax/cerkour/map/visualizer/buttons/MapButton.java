@@ -10,10 +10,15 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import us.lynuxcraft.deadsilenceiv.dutilities.ItemPlaceHolder;
 import us.lynuxcraft.deadsilenceiv.dutilities.builders.ItemBuilder;
 import us.lynuxcraft.deadsilenceiv.dutilities.inventory.InteractiveInventory;
 import us.lynuxcraft.deadsilenceiv.dutilities.inventory.actions.SlotAction;
 import us.lynuxcraft.deadsilenceiv.dutilities.inventory.items.ShareableButtonItem;
+import us.lynuxcraft.deadsilenceiv.dutilities.inventory.items.ShareableItem;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class MapButton extends ShareableGUIButton<MapVisualizerPage> {
     protected final Map map;
@@ -25,7 +30,7 @@ public abstract class MapButton extends ShareableGUIButton<MapVisualizerPage> {
     }
 
     public void build() {
-        ItemStack main = new ItemBuilder(Material.PAPER).setName(getItemName()).build();
+        ItemStack main = new ItemBuilder(Material.PAPER).setName(getItemName()).setLore(new ArrayList<>(Arrays.asList("&6Difficulty&e: &7%difficulty%"))).build();
         ShareableButtonItem item = new ShareableButtonItem(this,"main",main);
         addItem(item);
         loadPlaceholders();
@@ -42,6 +47,18 @@ public abstract class MapButton extends ShareableGUIButton<MapVisualizerPage> {
                 profile.joinMap(map);
             }
         });
+    }
+
+    @Override
+    protected void loadPlaceholders() {
+        for (ShareableItem item : getItems()) {
+            item.addPlaceholder(new ItemPlaceHolder("%difficulty%",true,true) {
+                @Override
+                public String getReplacement() {
+                    return ""+map.getDifficulty();
+                }
+            });
+        }
     }
 
     public abstract String getItemName();

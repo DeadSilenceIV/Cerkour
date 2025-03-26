@@ -5,6 +5,7 @@ api-version: '1.8.8'
 depend:
   - PlaceholderAPI
   - TAB
+  - ProtocolLib
 commands:
   gg:
     description: A simple GG command
