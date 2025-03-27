@@ -15,6 +15,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.PlayerTickEvent;
 import org.bukkit.potion.PotionEffect;
 
 public class PlayerMoveListener implements Listener {
@@ -35,6 +36,18 @@ public class PlayerMoveListener implements Listener {
         if (map != null) {
             handleCheckpoints(player, map, practice, x, y, z);
             handleMapTimer(player, map, profile, locUnder, x, y, z);
+        }
+    }
+
+    @EventHandler
+    public void tick(PlayerTickEvent event) {
+        Player player = event.getPlayer();
+        Map map = Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId()).getMap();
+        if(map != null) {
+            TickTimer timer = map.getTimer(player);
+            if (timer.getIsRunning()) {
+                timer.tick(player);
+            }
         }
     }
 

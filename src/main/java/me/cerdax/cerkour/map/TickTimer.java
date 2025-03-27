@@ -1,13 +1,9 @@
 package me.cerdax.cerkour.map;
 
-import me.cerdax.cerkour.Cerkour;
-import me.cerdax.cerkour.profile.Profile;
 import me.cerdax.cerkour.utils.ActionBarUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.configuration.serialization.SerializableAs;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -39,14 +35,6 @@ public class TickTimer implements ConfigurationSerializable {
         return this.playerUUID;
     }
 
-    public String getPlayerName() {
-        return Bukkit.getPlayer(this.playerUUID).getName();
-    }
-
-    public Profile getProfile(Player player) {
-        return Cerkour.getInstance().getProfileManager().getProfile(player.getUniqueId());
-    }
-
     public long getBest() {
         return this.best;
     }
@@ -59,8 +47,11 @@ public class TickTimer implements ConfigurationSerializable {
         this.best = ticks;
     }
 
-    public void tickTimer() {
+    public void tick(Player player) {
         ticks++;
+        if(ticks % 2 == 0) {
+            ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
+        }
     }
 
     public void setTicks(long ticks) {
@@ -79,34 +70,21 @@ public class TickTimer implements ConfigurationSerializable {
         this.ticks = 0;
     }
 
-    public void start(Player player) {
-        if (!getIsRunning()) {
+    public void start() {
+        if (!isRunning) {
             this.isRunning = true;
-            new BukkitRunnable() {
-                @Override
-                public void run() {
-                    if (getIsRunning()) {
-                        tickTimer();
-                        if(ticks%3 == 0) {
-                            ActionBarUtils.sendActionbar(player, "§e§l" + getTimeFromTicks(getTicks()));
-                        }
-                    } else {
-                        cancel();
-                    }
-                }
-            }.runTaskTimerAsynchronously(Cerkour.getInstance(), 1L, 1L);
         }
     }
 
     public void stop(Player player) {
-        if (getIsRunning()) {
+        if (isRunning) {
             this.isRunning = false;
             ActionBarUtils.sendActionbar(player, " ");
         }
     }
 
     public String getTimeFromTicks(long ticks) {
-        long millis = (5*(Math.round((double)ticks/5)))*50;
+        long millis = ticks*50;
         String formatted;
         if (ticks >= 20*60) {
             if (ticks >= 20*60*60) {

@@ -57,7 +57,7 @@ public class Map {
         if (toggle) {
             for (TickTimer timer : getTimers()) {
                 if (timer.equals(playerTimer)) {
-                    timer.start(player);
+                    timer.start();
                     return;
                 }
             }
